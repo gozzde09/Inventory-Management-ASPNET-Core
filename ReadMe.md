@@ -1,10 +1,10 @@
 ﻿Lagerhantering för sjukvårdsmaterial
 
-#Beskrivning
+# Beskrivning
 
 Denna webbapplikation är byggd för att hjälpa en låtsas vårdcentral att hålla koll på lagerstatus för sjukvårdsmaterial.
 
-#Applikationen består av:
+# Applikationen består av:
 
 1- Backend: ASP.NET Core 9 Web API (CRUD för artiklar och endpoint för saldoändring).
 
@@ -12,7 +12,7 @@ Denna webbapplikation är byggd för att hjälpa en låtsas vårdcentral att hå
 
 3- Databas: SQLite, kommunikation via JSON.
 
-#Funktionalitet
+# Funktionalitet
 
 1- Lista artiklar
 Visa alla registrerade artiklar med namn, antal i lager och enhet.
