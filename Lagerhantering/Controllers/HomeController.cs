@@ -18,7 +18,7 @@ namespace Lagerhantering.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult Lager()
         {
             return View();
         }
