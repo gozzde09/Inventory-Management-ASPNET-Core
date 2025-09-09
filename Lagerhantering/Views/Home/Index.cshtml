@@ -1,0 +1,49 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div>
+    <h2>Lagerhantering</h2>
+    <p>
+        Uppgiften handlar om lagerhantering för sjukvårdsmaterial där en vårdcentral
+        vill hålla koll på lagerstatus för sjukvårdsmaterial. De behöver kunna registrera
+        artiklar, uppdatera lagersaldo och få varning om lagret är lågt.
+    </p>
+    <ol>
+        <li>
+            Låter användaren skapa och lista artiklar med namn, antal i lager och
+            enhet (till exempel &quot;munskydd&quot;, 200, &quot;st&quot;).
+        </li>
+        <li>
+            Gör det möjligt att uppdatera antalet när material används eller fylls på.
+        </li>
+        <li>
+            Visar tydlig varning (till exempel färgkod) för artiklar med lågt saldo.
+
+        </li>
+        <li>
+            Förhindrar att saldot blir negativt.
+        </li>
+    </ol>
+</div>
+<div>
+    <h2>
+        Tekniska krav
+    </h2>
+    <ul>
+        <li>
+            Backend: .NET (ASP.NET Core).
+            CRUD för artiklar och endpoint för saldoändring.
+        </li>
+        <li>
+            Frontend: Frontendramverk Angular.
+            Lista artiklar, uppdatera antal och varningsindikatorer.
+        </li>
+        <li>
+            Database: SQLite.
+        </li>
+        <li>
+            All kommunikation via JSON.
+        </li>
+    </ul>
+</div>
