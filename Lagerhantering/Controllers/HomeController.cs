@@ -18,7 +18,7 @@ namespace Lagerhantering.Controllers
             return View();
         }
 
-        public IActionResult Lager()
+        public IActionResult Inventory()
         {
             return View();
         }

@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Lagerhantering.styles.css" asp-append-version="true" />
 </head>
-<body>
+<body >
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
@@ -24,21 +24,21 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Instruktioner</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Lager">Lager</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Inventory">Lager</a>
                         </li>
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
-    <div class="container">
+    <div class="container flex-grow-1">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted d-flex">
-        <div class=" mx-auto">
+    <footer class="border-top d-flex footer  text-muted ">
+        <div class="mx-auto my-2">
             &copy; 2025 - Lagerhantering - Gözde Akgün
         </div>
     </footer>
