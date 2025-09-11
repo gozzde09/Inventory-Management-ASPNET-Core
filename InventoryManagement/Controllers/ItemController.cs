@@ -1,17 +1,80 @@
 ﻿using InventoryManagement.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace InventoryManagement.Controllers
 {
-  public class ItemController : Controller
+  [ApiController]
+  [Route("api/[controller]")]
+
+  public class ItemController : ControllerBase
   {
-    public IActionResult Index()
+    private readonly ItemDbContext _context;
+
+    public ItemController(ItemDbContext context)
     {
-      using (ItemDbContext db = new ItemDbContext())
+      _context = context;
+    }
+
+    [HttpGet]
+    public async Task<IEnumerable<Item>> GetItems()
+    {
+      var items = await _context.Items.AsNoTracking().ToListAsync();
+      return items;
+    }
+    [HttpPost]
+    public async Task<IActionResult> CreateItem(Item item)
+    {
+      if (!ModelState.IsValid)
       {
-        List<Item> itemsList = db.Items.ToList();
-        return View(itemsList);
+        return BadRequest(ModelState);
       }
+      await _context.AddAsync(item);
+      var result = await _context.SaveChangesAsync();
+      if (result > 0)
+      {
+        return Ok("Item created");
+      }
+      return BadRequest("Failed to create item");
+    }
+
+    [HttpDelete("{id:int}")]
+    public async Task<IActionResult> DeleteItem(int id)
+    {
+      var item = await _context.Items.FindAsync(id);
+      if (item is null)
+      {
+        return NotFound();
+      }
+      _context.Remove(item);
+
+      var result = await _context.SaveChangesAsync();
+      if (result > 0)
+      {
+        return Ok("Item deleted");
+      }
+      return BadRequest("Failed to delete item");
+    }
+
+    [HttpPut("{id:int}")]
+    public async Task<IActionResult> EditItem(int id, Item item)
+    {
+      var itemFromDb = await _context.Items.FindAsync(id);
+      if (itemFromDb is null)
+      {
+        return BadRequest("Item not found");
+      }
+
+      itemFromDb.Name = item.Name;
+      itemFromDb.Quantity = item.Quantity;
+      itemFromDb.Unit = item.Unit;
+
+      var result = await _context.SaveChangesAsync();
+      if (result > 0)
+      {
+        return Ok("Item updated");
+      }
+      return BadRequest("Failed to update item");
     }
   }
 }
