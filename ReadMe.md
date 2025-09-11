@@ -8,7 +8,7 @@ Denna webbapplikation är byggd för att hjälpa en låtsas vårdcentral att hå
 
 1- Backend: ASP.NET Core 9 Web API (CRUD för artiklar och endpoint för saldoändring).
 
-2- Frontend: Angular 17 (lista artiklar, uppdatera antal och visa varningsindikatorer).
+2- Frontend: Angular 20 (lista artiklar, uppdatera antal och visa varningsindikatorer).
 
 3- Databas: SQLite, kommunikation via JSON.
 
