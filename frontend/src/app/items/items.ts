@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Item } from '../interfaces/items';
 import { ItemsService } from '../services/items.service';
@@ -11,7 +11,7 @@ import { ItemsService } from '../services/items.service';
   styleUrl: './items.css',
 })
 export class ItemsComponent implements OnInit {
-  items: Item[] = [];
+  items = signal<Item[]>([]);
   newItem: Item = { id: 0, name: '', quantity: 0, unit: '' };
 
   editId: number | null = null;
@@ -24,14 +24,14 @@ export class ItemsComponent implements OnInit {
   }
 
   loadItems() {
-    this.itemService.getItems().subscribe((data: Item[]) => (this.items = data));
+    this.itemService.getItems().subscribe((data: Item[]) => this.items.set(data));
   }
 
   // CREATE
   addItem() {
     this.itemService.createItem(this.newItem).subscribe({
       next: (item: Item) => {
-        this.items.push(item);
+        this.items.update((items) => [...items, item]);
         this.newItem = { id: 0, name: '', quantity: 0, unit: '' };
       },
       error: (err: string) => alert('Misslyckades att skapa: ' + err),
@@ -62,7 +62,7 @@ export class ItemsComponent implements OnInit {
   deleteItem(item: Item) {
     if (confirm(`Är du säker på att du vill ta bort "${item.name}"?`)) {
       this.itemService.deleteItem(item.id).subscribe({
-        next: () => (this.items = this.items.filter((i) => i.id !== item.id)),
+        next: () => this.items.update((items) => items.filter((i) => i.id !== item.id)),
         error: (err: string) => alert('Misslyckades att ta bort: ' + err),
       });
     }
