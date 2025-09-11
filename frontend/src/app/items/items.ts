@@ -14,19 +14,7 @@ export class ItemsComponent implements OnInit {
   items!: Observable<Item[]>;
   itemService = inject(ItemsService);
 
-  // ngOnInit(): void {
-  //   this.items$ = this.itemService.getItems();
-  //   console.log(this.items$);
-  // }
-
   ngOnInit(): void {
-    this.itemService.getItems().subscribe({
-      next: (response) => {
-        console.log(response);
-      },
-      error: (error) => {
-        console.log(error);
-      },
-    });
+    this.items = this.itemService.getItems();
   }
 }

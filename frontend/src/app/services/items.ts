@@ -8,5 +8,5 @@ import { Item } from '../types/items';
 })
 export class Items {
   constructor(private http: HttpClient) {}
-  getItems = (): Observable<Item[]> => this.http.get<Item[]>('http://localhost:5265/api/items');
+  getItems = (): Observable<Item[]> => this.http.get<Item[]>('http://localhost:5293/api/items');
 }

@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace InventoryManagement.Migrations
+namespace backend.Migrations
 {
     /// <inheritdoc />
     public partial class Initial : Migration

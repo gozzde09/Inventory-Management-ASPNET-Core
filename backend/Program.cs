@@ -3,12 +3,10 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// builder.Services.AddDbContext<ItemDbContext>(options =>
-//     options.UseSqlite("Data Source=inventory.db"));
-
+// Add services to the container.
 builder.Services.AddDbContext<ItemDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
-
+builder.Services.AddOpenApi();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -29,6 +27,7 @@ app.UseCors(options =>
     options.AllowAnyMethod()
            .AllowAnyHeader()
            .AllowAnyOrigin());
+
 app.MapControllers();
 
 app.Run();

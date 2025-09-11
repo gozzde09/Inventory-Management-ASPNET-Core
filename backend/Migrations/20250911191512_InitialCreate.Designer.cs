@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace InventoryManagement.Migrations
+namespace backend.Migrations
 {
     [DbContext(typeof(ItemDbContext))]
-    [Migration("20250911124129_Initial")]
-    partial class Initial
+    [Migration("20250911191512_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

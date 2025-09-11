@@ -7,21 +7,16 @@ namespace InventoryManagement.Controllers
   [ApiController]
   [Route("api/[controller]")]
 
-  public class ItemController : ControllerBase
+  public class ItemsController : ControllerBase
   {
     private readonly ItemDbContext _context;
 
-    public ItemController(ItemDbContext context)
+    public ItemsController(ItemDbContext context)
     {
       _context = context;
     }
 
-    [HttpGet]
-    public async Task<IEnumerable<Item>> GetItems()
-    {
-      var items = await _context.Items.AsNoTracking().ToListAsync();
-      return items;
-    }
+    // CREATE
     [HttpPost]
     public async Task<IActionResult> CreateItem(Item item)
     {
@@ -38,24 +33,15 @@ namespace InventoryManagement.Controllers
       return BadRequest("Failed to create item");
     }
 
-    [HttpDelete("{id:int}")]
-    public async Task<IActionResult> DeleteItem(int id)
+    // READ
+    [HttpGet]
+    public async Task<IEnumerable<Item>> GetItems()
     {
-      var item = await _context.Items.FindAsync(id);
-      if (item is null)
-      {
-        return NotFound();
-      }
-      _context.Remove(item);
-
-      var result = await _context.SaveChangesAsync();
-      if (result > 0)
-      {
-        return Ok("Item deleted");
-      }
-      return BadRequest("Failed to delete item");
+      var items = await _context.Items.AsNoTracking().ToListAsync();
+      return items;
     }
 
+    // UPDATE
     [HttpPut("{id:int}")]
     public async Task<IActionResult> EditItem(int id, Item item)
     {
@@ -75,6 +61,25 @@ namespace InventoryManagement.Controllers
         return Ok("Item updated");
       }
       return BadRequest("Failed to update item");
+    }
+
+    // DELETE
+    [HttpDelete("{id:int}")]
+    public async Task<IActionResult> DeleteItem(int id)
+    {
+      var item = await _context.Items.FindAsync(id);
+      if (item is null)
+      {
+        return NotFound();
+      }
+      _context.Remove(item);
+
+      var result = await _context.SaveChangesAsync();
+      if (result > 0)
+      {
+        return Ok("Item deleted");
+      }
+      return BadRequest("Failed to delete item");
     }
   }
 }
