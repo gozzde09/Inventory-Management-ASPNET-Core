@@ -1,12 +1,11 @@
 using InventoryManagement.Models;
 using Microsoft.EntityFrameworkCore;
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddDbContext<ItemContext>(options =>
+builder.Services.AddDbContext<ItemDbContext>(options =>
     options.UseSqlite("Data Source=items.db"));
 
 var app = builder.Build();

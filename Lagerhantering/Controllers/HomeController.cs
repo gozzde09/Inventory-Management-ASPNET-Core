@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using InventoryManagement.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace InventoryManagement.Controllers
 {
@@ -10,7 +11,11 @@ namespace InventoryManagement.Controllers
     }
     public IActionResult Inventory()
     {
-      return View();
+      using (ItemDbContext db = new ItemDbContext())
+      {
+        List<Item> itemsList = db.Items.ToList();
+        return View(itemsList);
+      }
     }
   }
 }

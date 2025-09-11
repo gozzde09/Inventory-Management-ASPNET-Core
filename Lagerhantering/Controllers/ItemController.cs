@@ -5,17 +5,13 @@ namespace InventoryManagement.Controllers
 {
   public class ItemController : Controller
   {
-    private readonly ItemContext _context;
-
-    public ItemController(ItemContext context)
-    {
-      _context = context;
-    }
-
     public IActionResult Index()
     {
-      List<Item> items = _context.Items.ToList();
-      return View(items);
+      using (ItemDbContext db = new ItemDbContext())
+      {
+        List<Item> itemsList = db.Items.ToList();
+        return View(itemsList);
+      }
     }
   }
 }

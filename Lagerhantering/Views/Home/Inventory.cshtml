@@ -5,3 +5,22 @@
 <h1>@ViewData["Title"]</h1>
 
 <p>Lager</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Namn</th>
+            <th>Antal</th>
+            <th>Enhet</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(m => item.Name)</td>
+                <td>@Html.DisplayFor(m => item.Quantity)</td>
+                <td>@Html.DisplayFor(m => item.Unit)</td>
+            </tr>
+        }
+    </tbody>
+</table>
