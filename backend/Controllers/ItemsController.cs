@@ -24,13 +24,25 @@ namespace InventoryManagement.Controllers
       {
         return BadRequest(ModelState);
       }
+
       await _context.AddAsync(item);
-      var result = await _context.SaveChangesAsync();
-      if (result > 0)
-      {
-        return Ok("Item created");
-      }
-      return BadRequest("Failed to create item");
+      await _context.SaveChangesAsync();
+
+      // Returnera 201 Created + den nya resursens URL
+      return CreatedAtAction(
+          nameof(GetItemById), // metodnamn för att hämta en artikel
+          new { id = item.Id }, // route values
+          item // returnera det skapade objektet
+      );
+    }
+
+    // Extra endpoint för CreatedAtAction
+    [HttpGet("{id:int}")]
+    public async Task<ActionResult<Item>> GetItemById(int id)
+    {
+      var item = await _context.Items.FindAsync(id);
+      if (item is null) return NotFound();
+      return Ok(item);
     }
 
     // READ
@@ -48,7 +60,7 @@ namespace InventoryManagement.Controllers
       var itemFromDb = await _context.Items.FindAsync(id);
       if (itemFromDb is null)
       {
-        return BadRequest("Item not found");
+        return NotFound();
       }
 
       itemFromDb.Name = item.Name;
@@ -58,7 +70,7 @@ namespace InventoryManagement.Controllers
       var result = await _context.SaveChangesAsync();
       if (result > 0)
       {
-        return Ok("Item updated");
+        return Ok(itemFromDb);
       }
       return BadRequest("Failed to update item");
     }
@@ -77,7 +89,8 @@ namespace InventoryManagement.Controllers
       var result = await _context.SaveChangesAsync();
       if (result > 0)
       {
-        return Ok("Item deleted");
+
+        return NoContent();
       }
       return BadRequest("Failed to delete item");
     }
