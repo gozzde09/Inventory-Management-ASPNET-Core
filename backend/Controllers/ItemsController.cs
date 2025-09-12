@@ -94,5 +94,29 @@ namespace InventoryManagement.Controllers
       }
       return BadRequest("Failed to delete item");
     }
+
+    // PATCH - Adjust balance
+    [HttpPatch("{id:int}/adjust-balance")]
+    public async Task<IActionResult> AdjustBalance(int id, [FromBody] int change)
+    {
+      var item = await _context.Items.FindAsync(id);
+      if (item is null)
+      {
+        return NotFound();
+      }
+
+      // Nytt saldo
+      int newBalance = item.Quantity + change;
+      if (newBalance < 0)
+      {
+        return BadRequest("Balance cannot be negative");
+      }
+
+      item.Quantity = newBalance;
+      await _context.SaveChangesAsync();
+
+      return Ok(item); 
+    }
   }
+
 }
