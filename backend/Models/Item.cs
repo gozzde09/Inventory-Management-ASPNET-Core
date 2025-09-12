@@ -11,7 +11,7 @@ namespace InventoryManagement.Models
     public string Unit { get; set; } = string.Empty;
 
     // Tröskelärde för lågt saldo
-    public int LowStockThreshold { get; set; } = 10;
+    public int LowStockThreshold { get; set; } 
 
     // Om lagersaldot är under tröskelvärdet
     public bool IsLowStock => Quantity < LowStockThreshold;

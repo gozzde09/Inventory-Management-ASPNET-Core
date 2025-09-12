@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Item } from '../interfaces/items';
+import { Item } from '../interfaces/itemsType';
 import { ItemsService } from '../services/items.service';
 
 @Component({
@@ -12,10 +12,16 @@ import { ItemsService } from '../services/items.service';
 })
 export class ItemsComponent implements OnInit {
   items = signal<Item[]>([]);
-  newItem: Item = { id: 0, name: '', quantity: 0, unit: '' };
+  newItem: Item = { id: 0, name: '', quantity: 0, unit: '', lowStockThreshold: 0 };
 
   editId: number | null = null;
-  editItem: Item = { id: 0, name: '', quantity: 0, unit: '' };
+  editItem: Item = {
+    id: 0,
+    name: '',
+    quantity: 0,
+    unit: '',
+    lowStockThreshold: 0,
+  };
 
   constructor(private itemService: ItemsService) {}
 
@@ -32,7 +38,7 @@ export class ItemsComponent implements OnInit {
     this.itemService.createItem(this.newItem).subscribe({
       next: (item: Item) => {
         this.items.update((items) => [...items, item]);
-        this.newItem = { id: 0, name: '', quantity: 0, unit: '' };
+        this.newItem = { id: 0, name: '', quantity: 0, unit: '', lowStockThreshold: 0 };
       },
       error: (err: string) => alert('Misslyckades att skapa: ' + err),
     });

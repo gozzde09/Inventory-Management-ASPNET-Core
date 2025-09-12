@@ -105,7 +105,7 @@ namespace InventoryManagement.Controllers
         return NotFound();
       }
 
-      // Nytt saldo
+      // New balance
       int newBalance = item.Quantity + change;
       if (newBalance < 0)
       {
