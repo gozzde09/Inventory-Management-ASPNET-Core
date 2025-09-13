@@ -3,54 +3,16 @@
     <h2>Lagerhantering</h2>
   </div>
 
-  <!-- Skapa nytt item -->
-  <form class="row g-2 mb-4" (ngSubmit)="addItem()" #itemForm="ngForm">
-    <div class="col-md-4">
-      <input
-        class="form-control"
-        placeholder="Namn"
-        [(ngModel)]="newItem.name"
-        name="name"
-        required
-      />
-    </div>
-    <div class="col-md-2">
-      <input
-        type="number"
-        class="form-control"
-        placeholder="Mängd"
-        [(ngModel)]="newItem.quantity"
-        name="quantity"
-        required
-        min="0"
-      />
-    </div>
-    <div class="col-md-2">
-      <input
-        type="number"
-        class="form-control"
-        placeholder="Minimum saldo (varningsgräns)"
-        [(ngModel)]="newItem.lowStockThreshold"
-        name="threshold"
-        required
-      />
-    </div>
-    <div class="col-md-2">
-      <input
-        class="form-control"
-        placeholder="Enhet"
-        [(ngModel)]="newItem.unit"
-        name="unit"
-        required
-      />
-    </div>
-    <div class="col-md-2">
-      <button class="btn btn-success w-100" type="submit" [disabled]="!itemForm.valid">
-        Lägg till
-      </button>
-    </div>
-  </form>
-
+  <button class="btn btn-success" (click)="openAddForm()" [disabled]="isAddFormVisible()">
+    <i class="fas fa-plus me-2"></i>
+    {{ isAddFormVisible() ? 'Formulär öppet' : 'Ny artikel' }}
+  </button>
+  @if(isAddFormVisible()) {
+  <div class="mb-4">
+    <app-add-item-form (itemAdded)="onItemAdded($event)" (cancel)="closeAddForm()">
+    </app-add-item-form>
+  </div>
+  }
   <p class="text-muted">
     Totalt {{ items().length }} {{ items().length === 1 ? 'artikel' : 'artiklar' }}
   </p>

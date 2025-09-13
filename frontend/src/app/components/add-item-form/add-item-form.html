@@ -1,0 +1,79 @@
+<!-- Add new item -->
+<form class="row g-2 mb-4" (ngSubmit)="addItem()" #itemForm="ngForm">
+  <div class="col-md-3">
+    <label for="name" class="form-label">Artikelnamn</label>
+    <input
+      id="name"
+      class="form-control"
+      placeholder="Munskydd "
+      [(ngModel)]="newItem.name"
+      name="name"
+      required
+    />
+    @if( !newItem.name){
+    <div class="text-danger small">Namn är obligatoriskt.</div>
+    }
+  </div>
+
+  <div class="col-md-3">
+    <label for="quantity" class="form-label">Antal</label>
+    <input
+      id="quantity"
+      type="text"
+      class="form-control"
+      placeholder="0"
+      [(ngModel)]="newItem.quantity"
+      name="quantity"
+      required
+      pattern="^[0-9]+$"
+    />
+    @if (!newItem.quantity) {
+    <div class="text-danger small">Antal är obligatoriskt.</div>
+    } @else if( newItem.quantity==0) {
+    <div class="text-danger small">Antal får inte vara null.</div>
+    } @else if( newItem.quantity<0) {
+    <div class="text-danger small">Antal får inte vara negativt.</div>
+    } @else if (newItem.quantity && !newItem.quantity.toString().match('^[0-9]+$')) {
+    <div class="text-danger small">Antal får bara innehålla siffror.</div>
+    }
+  </div>
+
+  <div class="col-md-3">
+    <label for="unit" class="form-label">Enhet</label>
+    <input
+      id="unit"
+      class="form-control"
+      placeholder="Ex: st, flaska"
+      [(ngModel)]="newItem.unit"
+      name="unit"
+      required
+      pattern="^[^\d]+$"
+    />
+    @if ( !newItem.unit) {
+    <div class="text-danger small">Enhet är obligatoriskt.</div>
+    } @else if ( newItem.unit && !newItem.unit.match('^[^\\d]+$')) {
+    <div class="text-danger small">Enhet får inte innehålla siffror.</div>
+    }
+  </div>
+
+  <div class="col-md-3">
+    <label for="threshold" class="form-label">Minimum saldo</label>
+    <input
+      id="threshold"
+      type="number"
+      class="form-control"
+      placeholder="Varningsgräns"
+      [(ngModel)]="newItem.criticalStockThreshold"
+      name="threshold"
+      required
+      min="0"
+    />
+  </div>
+
+  <div class="col-md-12 d-flex align-items-end justify-content-end">
+    <button class="btn btn-success me-2" type="submit" [disabled]="!itemForm.valid">
+      Lägg till
+    </button>
+    <button class="btn btn-outline-secondary" (click)="closeAddForm()" type="button">Avbryt</button>
+  </div>
+</form>

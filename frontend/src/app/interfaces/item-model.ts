@@ -13,6 +13,5 @@ export interface CreateItemRequest {
   name: string;
   quantity: number;
   unit: string;
-  lowStockThreshold: number;
   criticalStockThreshold: number;
 }

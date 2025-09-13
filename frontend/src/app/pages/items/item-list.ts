@@ -1,12 +1,13 @@
+import { AddItemForm } from '../../components/add-item-form/add-item-form';
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, signal } from '@angular/core';
+import { CreateItemRequest, Item } from '../../interfaces/item-model';
 import { FormsModule } from '@angular/forms';
-import { CreateItemRequest, Item } from '../interfaces/item-model';
-import { InventoryService } from '../services/inventory.service';
+import { InventoryService } from '../../services/inventory.service';
 
 @Component({
   selector: 'app-items',
-  imports: [CommonModule, FormsModule],
+  imports: [AddItemForm, CommonModule, FormsModule],
   templateUrl: './item-list.html',
   styleUrl: './item-list.css',
 })
@@ -17,8 +18,7 @@ export class Items implements OnInit {
     name: '',
     quantity: 0,
     unit: '',
-    lowStockThreshold: 10,
-    criticalStockThreshold: 5,
+    criticalStockThreshold: 10,
   };
 
   editId: number | null = null;
@@ -33,10 +33,23 @@ export class Items implements OnInit {
     statusColor: 'green',
   };
 
-  // Filter and sort
-  selectedFilter = signal<'all' | 'good' | 'low' | 'critical'>('all');
-  sortField = signal<keyof Item>('name');
-  sortDirection = signal<'asc' | 'desc'>('asc');
+  isAddFormVisible = signal(false);
+
+  openAddForm(): void {
+    this.isAddFormVisible.set(true);
+  }
+  closeAddForm(): void {
+    this.isAddFormVisible.set(false);
+  }
+  onItemAdded(item: CreateItemRequest) {
+    this.inventoryService.createItem(item).subscribe({
+      next: (createdItem: Item) => {
+        this.items.update((items) => [...items, createdItem]);
+        this.closeAddForm();
+      },
+      error: (err: any) => alert('Failed to add item: ' + err.message),
+    });
+  }
 
   // Adjust stock modal
   showAdjustModal = signal<boolean>(false);
@@ -57,11 +70,6 @@ export class Items implements OnInit {
 
   // CREATE
   addItem() {
-    if (this.newItem.criticalStockThreshold > this.newItem.lowStockThreshold) {
-      alert('Kritisk tröskel kan inte vara högre än låg lagertröskel');
-      return;
-    }
-
     this.inventoryService.createItem(this.newItem).subscribe({
       next: (item: Item) => {
         this.items.update((items) => [...items, item]);

@@ -4,3 +4,9 @@
 .table-danger {
   --bs-table-bg: rgba(220, 53, 69, 0.1);
 }
+::placeholder {
+  color: lightgray;
+}
+label {
+  font-weight: bold;
+}
