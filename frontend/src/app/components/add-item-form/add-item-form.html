@@ -13,7 +13,7 @@
     @if( !newItem.name){
     <div class="text-danger small">Namn är obligatoriskt.</div>
     } @else if (itemExists(newItem.name)) {
-    <div class="text-warning small">Artikeln finns redan.</div>
+    <div class="text-danger small">Artikeln finns redan.</div>
     }
   </div>
 
@@ -32,11 +32,11 @@
     @if (!newItem.quantity) {
     <div class="text-danger small">Antal är obligatoriskt.</div>
     } @else if( newItem.quantity==0) {
-    <div class="text-warning small">Antal får inte vara null.</div>
+    <div class="text-danger small">Antal får inte vara null.</div>
     } @else if( newItem.quantity<0) {
-    <div class="text-warning small">Antal får inte vara negativt.</div>
+    <div class="text-danger small">Antal får inte vara negativt.</div>
     } @else if (newItem.quantity && !newItem.quantity.toString().match('^[0-9]+$')) {
-    <div class="text-warning small">Antal får bara innehålla siffror.</div>
+    <div class="text-danger small">Antal får bara innehålla siffror.</div>
     }
   </div>
 
@@ -54,7 +54,7 @@
     @if (!newItem.unit) {
     <div class="text-danger small">Enhet är obligatoriskt.</div>
     } @else if ( newItem.unit && !newItem.unit.match('^[^\\d]+$')) {
-    <div class="text-warning small">Enhet får inte innehålla siffror.</div>
+    <div class="text-danger small">Enhet får inte innehålla siffror.</div>
     }
   </div>
 

@@ -5,13 +5,8 @@
 
   @if(!isAddFormVisible()) {
   <div class="d-flex justify-content-end mb-3">
-    <button
-      class="btn"
-      style="background-color: #005b89; color: #fff"
-      (click)="openAddForm()"
-      [disabled]="isAddFormVisible()"
-    >
-      <i class="bi bi-plus me-2"></i>
+    <button class="btn blue-button" (click)="openAddForm()" [disabled]="isAddFormVisible()">
+      <i class="bi bi-plus"></i>
       Ny artikel
     </button>
   </div>
@@ -72,10 +67,9 @@
           <td>{{ item.unit }}</td>
           <td>{{ item.statusColor }}</td>
           <td>
-            <button class="btn btn-warning btn-sm me-2" (click)="startEdit(item)">Redigera</button>
-            <i class="bi bi-pencil me-2"></i>
-            <button class="btn btn-danger btn-sm" (click)="deleteItem(item)">Ta bort</button>
-            <i class="bi bi-trash me-2"></i>
+            <i class="bi bi-pencil me-2 blue-icon" (click)="startEdit(item)"></i>
+
+            <i class="bi bi-trash me-2 blue-icon" (click)="deleteItem(item)"></i>
           </td>
           }
         </tr>
