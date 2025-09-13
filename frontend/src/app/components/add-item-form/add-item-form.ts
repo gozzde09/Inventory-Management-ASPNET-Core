@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Output } from '@angular/core';
-import { CreateItemRequest } from '../../interfaces/item-model';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { CreateItemRequest, Item } from '../../interfaces/item-model';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -17,9 +17,14 @@ export class AddItemForm {
     unit: '',
     criticalStockThreshold: 5,
   };
-
+  @Input() existingItems: Item[] = [];
   @Output() itemAdded = new EventEmitter<CreateItemRequest>();
   @Output() cancel = new EventEmitter<void>();
+
+  itemExists(name: string): boolean {
+    if (!name) return false;
+    return this.existingItems.some((item) => item.name.toLowerCase() === name.toLowerCase());
+  }
 
   addItem() {
     if (this.newItem.name && this.newItem.unit && this.newItem.quantity >= 0) {

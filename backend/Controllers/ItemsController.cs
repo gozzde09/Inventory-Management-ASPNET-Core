@@ -33,12 +33,6 @@ namespace InventoryManagement.Controllers
         return Conflict($"An item with name '{item.Name}' already exists.");
       }
 
-      // Validation: Check thresholds
-      if (item.CriticalStockThreshold > item.LowStockThreshold)
-      {
-        return BadRequest("Critical threshold cannot be higher than low stock threshold.");
-      }
-
       await _context.AddAsync(item);
       await _context.SaveChangesAsync();
 
@@ -80,18 +74,10 @@ namespace InventoryManagement.Controllers
       {
         return Conflict($"An item with name '{item.Name}' already exists.");
       }
-
-      // Validation: Check thresholds
-      if (item.CriticalStockThreshold > item.LowStockThreshold)
-      {
-        return BadRequest("Critical threshold cannot be higher than low stock threshold.");
-      }
-
       // Update allowed fields
       itemFromDb.Name = item.Name;
       itemFromDb.Quantity = item.Quantity;
       itemFromDb.Unit = item.Unit;
-      itemFromDb.LowStockThreshold = item.LowStockThreshold;
       itemFromDb.CriticalStockThreshold = item.CriticalStockThreshold;
 
       await _context.SaveChangesAsync();

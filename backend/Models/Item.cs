@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace InventoryManagement.Models
 {
@@ -17,9 +18,8 @@ namespace InventoryManagement.Models
     [Range(0, int.MaxValue, ErrorMessage = "Quantity cannot be negative")]
     public int Quantity { get; set; }
     public string Unit { get; set; } = string.Empty;
-    [Range(0, int.MaxValue, ErrorMessage = "Low stock threshold cannot be negative")]
-    public int LowStockThreshold { get; set; }
-
+    [NotMapped]
+    public int LowStockThreshold => CriticalStockThreshold + (CriticalStockThreshold / 2);
     [Range(0, int.MaxValue, ErrorMessage = "Critical stock threshold cannot be negative")]
     public int CriticalStockThreshold { get; set; }
 

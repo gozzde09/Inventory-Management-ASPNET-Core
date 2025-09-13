@@ -3,13 +3,25 @@
     <h2>Lagerhantering</h2>
   </div>
 
-  <button class="btn btn-success" (click)="openAddForm()" [disabled]="isAddFormVisible()">
-    <i class="fas fa-plus me-2"></i>
-    {{ isAddFormVisible() ? 'Formulär öppet' : 'Ny artikel' }}
-  </button>
-  @if(isAddFormVisible()) {
+  @if(!isAddFormVisible()) {
+  <div class="d-flex justify-content-end mb-3">
+    <button
+      class="btn"
+      style="background-color: #005b89; color: #fff"
+      (click)="openAddForm()"
+      [disabled]="isAddFormVisible()"
+    >
+      <i class="bi bi-plus me-2"></i>
+      Ny artikel
+    </button>
+  </div>
+  } @else {
   <div class="mb-4">
-    <app-add-item-form (itemAdded)="onItemAdded($event)" (cancel)="closeAddForm()">
+    <app-add-item-form
+      [existingItems]="items()"
+      (itemAdded)="onItemAdded($event)"
+      (cancel)="closeAddForm()"
+    >
     </app-add-item-form>
   </div>
   }
@@ -21,6 +33,7 @@
     <table class="table table-bordered table-hover">
       <thead class="table-dark">
         <tr>
+          <th>#</th>
           <th>Artikelnamn</th>
           <th>Antal</th>
           <th>Enhet</th>
@@ -29,7 +42,7 @@
         </tr>
       </thead>
       <tbody>
-        @for (item of items(); track item.id) {
+        @for (item of items(); track item.id; let index=$index) {
         <tr [ngClass]="getStatusClass(item.statusColor)">
           <!-- Edit-läge -->
           @if (editId === item.id) {
@@ -53,16 +66,17 @@
             <button class="btn btn-secondary btn-sm" (click)="cancelEdit()">Avbryt</button>
           </td>
           } @else {
-          <!-- Läs-läge -->
+          <td>{{ index + 1 }}</td>
           <td>{{ item.name }}</td>
           <td>{{ item.quantity }}</td>
           <td>{{ item.unit }}</td>
           <td>{{ item.statusColor }}</td>
           <td>
             <button class="btn btn-warning btn-sm me-2" (click)="startEdit(item)">Redigera</button>
+            <i class="bi bi-pencil me-2"></i>
             <button class="btn btn-danger btn-sm" (click)="deleteItem(item)">Ta bort</button>
+            <i class="bi bi-trash me-2"></i>
           </td>
-
           }
         </tr>
         } @empty {

@@ -12,6 +12,8 @@
     />
     @if( !newItem.name){
     <div class="text-danger small">Namn är obligatoriskt.</div>
+    } @else if (itemExists(newItem.name)) {
+    <div class="text-warning small">Artikeln finns redan.</div>
     }
   </div>
 
@@ -30,11 +32,11 @@
     @if (!newItem.quantity) {
     <div class="text-danger small">Antal är obligatoriskt.</div>
     } @else if( newItem.quantity==0) {
-    <div class="text-danger small">Antal får inte vara null.</div>
+    <div class="text-warning small">Antal får inte vara null.</div>
     } @else if( newItem.quantity<0) {
-    <div class="text-danger small">Antal får inte vara negativt.</div>
+    <div class="text-warning small">Antal får inte vara negativt.</div>
     } @else if (newItem.quantity && !newItem.quantity.toString().match('^[0-9]+$')) {
-    <div class="text-danger small">Antal får bara innehålla siffror.</div>
+    <div class="text-warning small">Antal får bara innehålla siffror.</div>
     }
   </div>
 
@@ -49,10 +51,10 @@
       required
       pattern="^[^\d]+$"
     />
-    @if ( !newItem.unit) {
+    @if (!newItem.unit) {
     <div class="text-danger small">Enhet är obligatoriskt.</div>
     } @else if ( newItem.unit && !newItem.unit.match('^[^\\d]+$')) {
-    <div class="text-danger small">Enhet får inte innehålla siffror.</div>
+    <div class="text-warning small">Enhet får inte innehålla siffror.</div>
     }
   </div>
 
@@ -71,7 +73,11 @@
   </div>
 
   <div class="col-md-12 d-flex align-items-end justify-content-end">
-    <button class="btn btn-success me-2" type="submit" [disabled]="!itemForm.valid">
+    <button
+      class="btn btn-success me-2"
+      type="submit"
+      [disabled]="!itemForm.valid || itemExists(newItem.name)"
+    >
       Lägg till
     </button>
     <button class="btn btn-outline-secondary" (click)="closeAddForm()" type="button">Avbryt</button>

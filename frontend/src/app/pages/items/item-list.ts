@@ -89,11 +89,6 @@ export class Items implements OnInit {
   }
 
   saveEdit(original: Item) {
-    if (this.editItem.criticalStockThreshold > this.editItem.lowStockThreshold) {
-      alert('Kritisk tröskel kan inte vara högre än låg lagertröskel');
-      return;
-    }
-
     this.inventoryService.updateItem(this.editItem).subscribe({
       next: (updatedItem: Item) => {
         this.items.update((items) =>
@@ -163,6 +158,7 @@ export class Items implements OnInit {
       error: (err: any) => alert('Misslyckades att justera lager: ' + err.message),
     });
   }
+
   getStatusClass(status: string): string {
     switch (status) {
       case 'yellow':
