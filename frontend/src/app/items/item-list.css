@@ -1,0 +1,6 @@
+.table-warning {
+  --bs-table-bg: rgba(255, 193, 7, 0.1);
+}
+.table-danger {
+  --bs-table-bg: rgba(220, 53, 69, 0.1);
+}
