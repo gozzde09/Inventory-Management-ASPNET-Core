@@ -12,7 +12,7 @@ import { ItemsService } from '../services/items.service';
 })
 export class ItemsComponent implements OnInit {
   items = signal<Item[]>([]);
-  newItem: Item = { id: 0, name: '', quantity: 0, unit: '', lowStockThreshold: 0 };
+  newItem: Item = { id: 0, name: '', quantity: 0, unit: '' };
 
   editId: number | null = null;
   editItem: Item = {
@@ -20,7 +20,6 @@ export class ItemsComponent implements OnInit {
     name: '',
     quantity: 0,
     unit: '',
-    lowStockThreshold: 0,
   };
 
   constructor(private itemService: ItemsService) {}
@@ -38,7 +37,7 @@ export class ItemsComponent implements OnInit {
     this.itemService.createItem(this.newItem).subscribe({
       next: (item: Item) => {
         this.items.update((items) => [...items, item]);
-        this.newItem = { id: 0, name: '', quantity: 0, unit: '', lowStockThreshold: 0 };
+        this.newItem = { id: 0, name: '', quantity: 0, unit: '' };
       },
       error: (err: string) => alert('Misslyckades att skapa: ' + err),
     });

@@ -6,7 +6,6 @@ namespace InventoryManagement.Controllers
 {
   [ApiController]
   [Route("api/[controller]")]
-
   public class ItemsController : ControllerBase
   {
     private readonly ItemDbContext _context;
@@ -16,63 +15,88 @@ namespace InventoryManagement.Controllers
       _context = context;
     }
 
-    // CREATE
+    // CREATE - Add a new item
     [HttpPost]
-    public async Task<IActionResult> CreateItem(Item item)
+    public async Task<ActionResult<Item>> CreateItem(Item item)
     {
       if (!ModelState.IsValid)
       {
         return BadRequest(ModelState);
       }
 
+      // Validation: Check for duplicate names
+      var existingItem = await _context.Items
+          .FirstOrDefaultAsync(i => i.Name.ToLower() == item.Name.ToLower());
+
+      if (existingItem != null)
+      {
+        return Conflict($"An item with name '{item.Name}' already exists.");
+      }
+
+      // Validation: Check thresholds
+      if (item.CriticalStockThreshold > item.LowStockThreshold)
+      {
+        return BadRequest("Critical threshold cannot be higher than low stock threshold.");
+      }
+
       await _context.AddAsync(item);
       await _context.SaveChangesAsync();
 
-      // Returnera 201 Created + den nya resursens URL
-      return CreatedAtAction(
-          nameof(GetItemById), // metodnamn för att hämta en artikel
-          new { id = item.Id }, // route values
-          item // returnera det skapade objektet
-      );
+      return Created("", item); // 201
     }
 
-    // Extra endpoint för CreatedAtAction
-    [HttpGet("{id:int}")]
-    public async Task<ActionResult<Item>> GetItemById(int id)
-    {
-      var item = await _context.Items.FindAsync(id);
-      if (item is null) return NotFound();
-      return Ok(item);
-    }
-
-    // READ
+    // READ - Get all items
     [HttpGet]
-    public async Task<IEnumerable<Item>> GetItems()
+    public async Task<ActionResult<IEnumerable<Item>>> GetItems()
     {
       var items = await _context.Items.AsNoTracking().ToListAsync();
-      return items;
+      return Ok(items);
     }
 
     // UPDATE
     [HttpPut("{id:int}")]
     public async Task<IActionResult> EditItem(int id, Item item)
     {
+      if (id != item.Id)
+      {
+        return BadRequest("Item ID mismatch");
+      }
+      if (!ModelState.IsValid)
+      {
+        return BadRequest(ModelState);
+      }
+
       var itemFromDb = await _context.Items.FindAsync(id);
       if (itemFromDb is null)
       {
-        return NotFound();
+        return NotFound($"Item with ID {id} not found.");
       }
 
+      // Check for duplicate names (excluding current item)
+      var duplicateItem = await _context.Items
+          .FirstOrDefaultAsync(i => i.Name.ToLower() == item.Name.ToLower() && i.Id != id);
+
+      if (duplicateItem != null)
+      {
+        return Conflict($"An item with name '{item.Name}' already exists.");
+      }
+
+      // Validation: Check thresholds
+      if (item.CriticalStockThreshold > item.LowStockThreshold)
+      {
+        return BadRequest("Critical threshold cannot be higher than low stock threshold.");
+      }
+
+      // Update allowed fields
       itemFromDb.Name = item.Name;
       itemFromDb.Quantity = item.Quantity;
       itemFromDb.Unit = item.Unit;
+      itemFromDb.LowStockThreshold = item.LowStockThreshold;
+      itemFromDb.CriticalStockThreshold = item.CriticalStockThreshold;
 
-      var result = await _context.SaveChangesAsync();
-      if (result > 0)
-      {
-        return Ok(itemFromDb);
-      }
-      return BadRequest("Failed to update item");
+      await _context.SaveChangesAsync();
+
+      return Ok(itemFromDb);
     }
 
     // DELETE
@@ -82,41 +106,36 @@ namespace InventoryManagement.Controllers
       var item = await _context.Items.FindAsync(id);
       if (item is null)
       {
-        return NotFound();
+        return NotFound($"Item with ID {id} not found.");
       }
-      _context.Remove(item);
 
-      var result = await _context.SaveChangesAsync();
-      if (result > 0)
-      {
+      _context.Items.Remove(item);
+      await _context.SaveChangesAsync();
 
-        return NoContent();
-      }
-      return BadRequest("Failed to delete item");
+      return NoContent();
     }
 
-    // PATCH - Adjust balance
+    // PATCH - Adjust stock balance
     [HttpPatch("{id:int}/adjust-balance")]
     public async Task<IActionResult> AdjustBalance(int id, [FromBody] int change)
     {
       var item = await _context.Items.FindAsync(id);
       if (item is null)
       {
-        return NotFound();
+        return NotFound($"Item with ID {id} not found.");
       }
 
-      // New balance
+      // Prevent negative stock
       int newBalance = item.Quantity + change;
       if (newBalance < 0)
       {
-        return BadRequest("Balance cannot be negative");
+        return BadRequest($"Insufficient stock. Current: {item.Quantity}, Requested change: {change}");
       }
 
       item.Quantity = newBalance;
       await _context.SaveChangesAsync();
 
-      return Ok(item); 
+      return Ok(item);
     }
   }
-
 }

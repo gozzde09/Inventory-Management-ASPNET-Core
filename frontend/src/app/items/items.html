@@ -84,11 +84,12 @@
         <td>{{ item.name }}</td>
         <td>{{ item.quantity }}</td>
         <td>{{ item.unit }}</td>
-        <td>{{ item.lowStockThreshold }}</td>
+        <td>{{ item.statusColor }}</td>
         <td>
           <button class="btn btn-warning btn-sm me-2" (click)="startEdit(item)">Redigera</button>
           <button class="btn btn-danger btn-sm" (click)="deleteItem(item)">Ta bort</button>
         </td>
+
         }
       </tr>
       } @empty {
