@@ -5,6 +5,8 @@ import { CreateItemRequest, Item } from '../../interfaces/item-model';
 import { FormsModule } from '@angular/forms';
 import { InventoryService } from '../../services/inventory.service';
 import { StockUpdateForm } from '../../components/stock-update-form/stock-update-form';
+import { ConfirmationModal } from '../../components/confirmation-modal/confirmation-modal';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-items',
@@ -39,9 +41,13 @@ export class Items implements OnInit {
   // Stock update modal
   selectedItemForStockUpdate: Item | null = null;
 
+  // Delete confirmation modal state
+  isDeletingItem = signal<boolean>(false);
+
   constructor(
     private inventoryService: InventoryService,
-    private stockUpdateForm: StockUpdateForm
+    private stockUpdateForm: StockUpdateForm,
+    private modalService: NgbModal
   ) {}
 
   ngOnInit(): void {
@@ -102,20 +108,38 @@ export class Items implements OnInit {
   }
 
   // DELETE
-  deleteItem(item: Item) {
-    if (confirm(`Är du säker på att du vill ta bort "${item.name}"?`)) {
-      this.inventoryService.deleteItem(item.id).subscribe({
-        next: () => {
-          this.items.update((items) => items.filter((i) => i.id !== item.id));
-        },
-        error: (err: any) => alert('Misslyckades att ta bort: ' + err.message),
-      });
-    }
+  openDeleteConfirmation(item: Item): void {
+    const modalRef = this.modalService.open(ConfirmationModal);
+    modalRef.componentInstance.item = item;
+
+    modalRef.result.then(
+      (result: boolean) => {
+        if (result) {
+          this.confirmDelete(item);
+        }
+      },
+      () => {
+        // Modal dismissed
+      }
+    );
   }
 
-  openStockUpdateModal(item: Item): void {
-    this.stockUpdateForm.openStockUpdateModal(item, (updatedItem: Item) => {
-      this.items.update((items) => items.map((i) => (i.id === updatedItem.id ? updatedItem : i)));
+  closeDeleteModal(): void {
+    // No longer needed since modal handles close
+  }
+
+  confirmDelete(item: Item): void {
+    this.isDeletingItem.set(true);
+
+    this.inventoryService.deleteItem(item.id).subscribe({
+      next: () => {
+        this.items.update((items) => items.filter((i) => i.id !== item.id));
+        this.isDeletingItem.set(false);
+      },
+      error: (err: any) => {
+        this.isDeletingItem.set(false);
+        alert('Misslyckades att ta bort: ' + err.message);
+      },
     });
   }
 
@@ -123,6 +147,12 @@ export class Items implements OnInit {
   showAdjustModal = signal<boolean>(false);
   selectedItemForAdjust = signal<Item | null>(null);
   adjustmentAmount = signal<number>(0);
+
+  openStockUpdateModal(item: Item): void {
+    this.stockUpdateForm.openStockUpdateModal(item, (updatedItem: Item) => {
+      this.items.update((items) => items.map((i) => (i.id === updatedItem.id ? updatedItem : i)));
+    });
+  }
 
   openAdjustModal(item: Item) {
     this.selectedItemForAdjust.set(item);
