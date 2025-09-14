@@ -8,11 +8,11 @@ body {
   margin: 0;
   font-family: Roboto, 'Helvetica Neue', sans-serif;
 }
-.blue-button {
+.btn-blue {
   background-color: #005b89;
   color: #fff;
 }
-.blue-button:hover {
+.btn-blue:hover {
   background-color: #004a6c;
   color: #fff;
 }
