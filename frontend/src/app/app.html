@@ -1,9 +1,108 @@
-<a [routerLink]="'/items'">Items</a>
+<!-- <a [routerLink]="'/items'">Items</a>
+<a [routerLink]="'/'">Översikt</a>
 
-<div class="container mt-4">
-  <!-- Page Header -->
-  <div class="d-flex justify-content-between align-items-center mb-3">
-    <h2>Inventory Management</h2>
+<router-outlet /> -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container">
+    <a class="navbar-brand" [routerLink]="'/'">Lagerhanteringssystem</a>
+
+    <button class="navbar-toggler" type="button" (click)="isCollapsed = !isCollapsed">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="navbar-collapse" [ngbCollapse]="isCollapsed">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            [routerLink]="'/'"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            Översikt
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="'/items'" routerLinkActive="active"> Lager </a>
+        </li>
+      </ul>
+    </div>
   </div>
-</div>
-<router-outlet />
+</nav>
+
+<!-- Main Content -->
+<main class="container-fluid mt-4 mb-5">
+  <router-outlet />
+</main>
+
+<!-- Footer -->
+<footer class="footer bg-dark text-light py-4 mt-auto">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <h6 class="text-uppercase fw-bold mb-3">
+          <i class="fas fa-boxes me-2"></i>
+          Lagerhanteringssystem
+        </h6>
+        <p class="mb-2">Ett modernt system för att hantera lagerstatus och övervaka artiklar.</p>
+        <p class="text-muted small">Byggd med Angular 20 & ASP.NET Core</p>
+      </div>
+
+      <div class="col-md-3">
+        <h6 class="text-uppercase fw-bold mb-3">Snabblänkar</h6>
+        <ul class="list-unstyled">
+          <li class="mb-2">
+            <a [routerLink]="'/'" class="text-light text-decoration-none">
+              <i class="fas fa-angle-right me-1"></i>
+              Översikt
+            </a>
+          </li>
+          <li class="mb-2">
+            <a [routerLink]="'/items'" class="text-light text-decoration-none">
+              <i class="fas fa-angle-right me-1"></i>
+              Alla Artiklar
+            </a>
+          </li>
+          <li class="mb-2">
+            <a [routerLink]="'/low-stock'" class="text-light text-decoration-none">
+              <i class="fas fa-angle-right me-1"></i>
+              Lågt Lager
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="col-md-3">
+        <h6 class="text-uppercase fw-bold mb-3">Kontakt</h6>
+        <div class="mb-2">
+          <i class="fas fa-envelope me-2"></i>
+          <span class="small">support@lagersystem.se</span>
+        </div>
+        <div class="mb-2">
+          <i class="fas fa-phone me-2"></i>
+          <span class="small">+46 8 123 456 78</span>
+        </div>
+        <div class="mb-2">
+          <i class="fas fa-clock me-2"></i>
+          <span class="small">Mån-Fre 08:00-17:00</span>
+        </div>
+      </div>
+    </div>
+
+    <hr class="border-secondary" />
+
+    <div class="row align-items-center">
+      <div class="col-md-8">
+        <p class="small mb-0">© 2025 Lagerhanteringssystem. Alla rättigheter förbehållna.</p>
+      </div>
+      <div class="col-md-4 text-md-end">
+        <div class="d-inline-flex gap-2">
+          <span class="badge bg-success">
+            <i class="fas fa-circle me-1"></i>
+            Online
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
