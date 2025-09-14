@@ -5,7 +5,7 @@
 
   @if(!isAddFormVisible()) {
   <div class="d-flex justify-content-end mb-3">
-    <button class="btn btn-blue" (click)="openAddForm()" [disabled]="isAddFormVisible()">
+    <button class="btn btn-success" (click)="openAddForm()" [disabled]="isAddFormVisible()">
       <i class="bi bi-plus"></i>
       Ny artikel
     </button>
@@ -24,51 +24,43 @@
     Totalt {{ items().length }} {{ items().length === 1 ? 'artikel' : 'artiklar' }}
   </p>
 
-  <div class="table-responsive rounded-3 overflow-hidden">
+  <div class="table-responsive rounded-4 overflow-hidden">
     <table class="table table-bordered table-hover">
-      <thead class="table-dark">
-        <tr>
+      <thead id="table-header-custom">
+        <tr id="table-header-custom" class="text-center">
           <th>#</th>
           <th>Artikelnamn</th>
           <th>Antal</th>
-          <th>Enhet</th>
-          <th>Status</th>
+          <th class="d-none d-sm-table-cell">Status</th>
           <th></th>
         </tr>
       </thead>
       <tbody>
         @for (item of items(); track item.id; let index=$index) {
         <tr [ngClass]="getStatusClass(item.statusColor)">
-          <!-- Edit-läge -->
+          <!-- Edit-mode -->
           @if (editId === item.id) {
           <td>{{ index + 1 }}</td>
           <td>
             <input [(ngModel)]="editItem.name" class="form-control" name="editName" />
           </td>
-          <td>{{ item.quantity }}</td>
           <td>
             <input [(ngModel)]="editItem.unit" class="form-control" name="editUnit" />
           </td>
-          <td class="position-relative">
-            Låg
-            <span
-              class="position-absolute top-0 start-100 translate-middle p-2 bg-danger border border-light rounded-circle"
-            >
-              <span class="visually-hidden">{{ item.statusColor }}</span>
-            </span>
-          </td>
+          <td class="d-none d-sm-table-cell"></td>
           <td>
-            <div class="d-flex justify-content-evenly align-items-center mt-1">
-              <button class="btn btn-success btn-sm" (click)="saveEdit(item)">Uppdatera</button>
+            <div class="d-flex justify-content-evenly align-items-center mt-1 flex-wrap">
+              <button class="btn btn-success btn-sm mb-1 mb-sm-0" (click)="saveEdit(item)">
+                Uppdatera
+              </button>
               <button class="btn btn-secondary btn-sm" (click)="cancelEdit()">Avbryt</button>
             </div>
           </td>
           } @else {
           <td>{{ index + 1 }}</td>
           <td>{{ item.name }}</td>
-          <td>{{ item.quantity }}</td>
-          <td>{{ item.unit }}</td>
-          <td class="text-center">
+          <td>{{ item.quantity }} {{ item.unit }}</td>
+          <td class="d-none d-sm-table-cell">
             @if (item.statusColor === 'red') {
             <span class="badge fw-medium text-bg-danger"> Kritiskt</span>
             } @else if (item.statusColor === 'yellow') {
@@ -77,10 +69,10 @@
             <span class="badge fw-medium text-bg-success">OK</span>
             }
           </td>
-          <td class="d-flex justify-content-evenly align-items-center">
+          <td class="d-flex justify-content-evenly align-items-center flex-wrap">
             <i class="bi bi-pencil me-2 blue-icon fs-6" (click)="startEdit(item)"></i>
             <i class="bi bi-trash me-2 blue-icon fs-6" (click)="deleteItem(item)"></i>
-            <button class="btn btn-blue btn-sm" (click)="openStockUpdateModal(item)">
+            <button class="btn btn-blue btn-sm mt-1 mt-sm-0" (click)="openStockUpdateModal(item)">
               Saldoändring
             </button>
           </td>
@@ -89,7 +81,7 @@
 
         } @empty {
         <tr>
-          <td colspan="7" class="text-center text-muted">Inga artiklar hittades</td>
+          <td colspan="4" class="text-center text-muted">Inga artiklar hittades</td>
         </tr>
         }
       </tbody>
