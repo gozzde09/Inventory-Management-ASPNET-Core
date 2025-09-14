@@ -59,20 +59,22 @@
   </div>
 
   <div class="col-md-3">
-    <label for="threshold" class="form-label">Minimum saldo</label>
+    <label for="threshold" class="form-label">Tröskelvärde</label>
     <input
       id="threshold"
-      type="number"
+      type="text"
       class="form-control"
       placeholder="Varningsgräns"
       [(ngModel)]="newItem.criticalStockThreshold"
       name="threshold"
       required
-      min="0"
     />
+    @if (!newItem.criticalStockThreshold) {
+    <div class="text-danger small">Tröskelvärde är obligatoriskt.</div>
+    }
   </div>
 
-  <div class="col-md-12 d-flex align-items-end justify-content-end">
+  <div class="col-md-12 d-flex align-items-end justify-content-end mt-2">
     <button
       class="btn btn-success me-2"
       type="submit"

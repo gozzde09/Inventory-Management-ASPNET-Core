@@ -10,16 +10,10 @@
 label {
   font-weight: bold;
 }
-.blue-button {
-  background-color: #005b89;
-  color: #fff;
-}
-.blue-button:hover {
-  background-color: #004a6c;
-  color: #fff;
-}
+
 .blue-icon {
   color: #005b89;
+  cursor: pointer;
 }
 .blue-icon:hover {
   color: #004a6c;

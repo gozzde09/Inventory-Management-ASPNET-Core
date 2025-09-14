@@ -1,9 +1,10 @@
 import { AddItemForm } from '../../components/add-item-form/add-item-form';
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, OnInit, Output, signal } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { CreateItemRequest, Item } from '../../interfaces/item-model';
 import { FormsModule } from '@angular/forms';
 import { InventoryService } from '../../services/inventory.service';
+import { StockUpdateForm } from '../../components/stock-update-form/stock-update-form';
 
 @Component({
   selector: 'app-items',
@@ -35,28 +36,13 @@ export class Items implements OnInit {
 
   isAddFormVisible = signal(false);
 
-  openAddForm(): void {
-    this.isAddFormVisible.set(true);
-  }
-  closeAddForm(): void {
-    this.isAddFormVisible.set(false);
-  }
-  onItemAdded(item: CreateItemRequest) {
-    this.inventoryService.createItem(item).subscribe({
-      next: (createdItem: Item) => {
-        this.items.update((items) => [...items, createdItem]);
-        this.closeAddForm();
-      },
-      error: (err: any) => alert('Failed to add item: ' + err.message),
-    });
-  }
+  // Stock update modal
+  selectedItemForStockUpdate: Item | null = null;
 
-  // Adjust stock modal
-  showAdjustModal = signal<boolean>(false);
-  selectedItemForAdjust = signal<Item | null>(null);
-  adjustmentAmount = signal<number>(0);
-
-  constructor(private inventoryService: InventoryService) {}
+  constructor(
+    private inventoryService: InventoryService,
+    private stockUpdateForm: StockUpdateForm
+  ) {}
 
   ngOnInit(): void {
     this.loadItems();
@@ -78,16 +64,30 @@ export class Items implements OnInit {
     });
   }
 
+  openAddForm(): void {
+    this.isAddFormVisible.set(true);
+  }
+  closeAddForm(): void {
+    this.isAddFormVisible.set(false);
+  }
+  onItemAdded(item: CreateItemRequest) {
+    this.inventoryService.createItem(item).subscribe({
+      next: (createdItem: Item) => {
+        this.items.update((items) => [...items, createdItem]);
+        this.closeAddForm();
+      },
+      error: (err: any) => alert('Failed to add item: ' + err.message),
+    });
+  }
+
   // EDIT
   startEdit(item: Item) {
     this.editId = item.id;
     this.editItem = { ...item };
   }
-
   cancelEdit() {
     this.editId = null;
   }
-
   saveEdit(original: Item) {
     this.inventoryService.updateItem(this.editItem).subscribe({
       next: (updatedItem: Item) => {
@@ -113,7 +113,17 @@ export class Items implements OnInit {
     }
   }
 
+  openStockUpdateModal(item: Item): void {
+    this.stockUpdateForm.openStockUpdateModal(item, (updatedItem: Item) => {
+      this.items.update((items) => items.map((i) => (i.id === updatedItem.id ? updatedItem : i)));
+    });
+  }
+
   // STOCK ADJUSTMENT
+  showAdjustModal = signal<boolean>(false);
+  selectedItemForAdjust = signal<Item | null>(null);
+  adjustmentAmount = signal<number>(0);
+
   openAdjustModal(item: Item) {
     this.selectedItemForAdjust.set(item);
     this.adjustmentAmount.set(0);

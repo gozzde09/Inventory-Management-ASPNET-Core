@@ -15,7 +15,7 @@ export class AddItemForm {
     name: '',
     quantity: 0,
     unit: '',
-    criticalStockThreshold: 5,
+    criticalStockThreshold: 0,
   };
   @Input() existingItems: Item[] = [];
   @Output() itemAdded = new EventEmitter<CreateItemRequest>();

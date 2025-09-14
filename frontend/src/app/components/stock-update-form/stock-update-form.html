@@ -1,0 +1,86 @@
+<!-- Modal -->
+<div class="modal-header">
+  <h4 class="modal-title">Saldoändring</h4>
+  <button
+    type="button"
+    class="btn-close"
+    aria-label="Close"
+    (click)="activeModal.dismiss()"
+  ></button>
+</div>
+<div class="modal-body">
+  <form [formGroup]="inventoryForm" (ngSubmit)="onSubmit()">
+    <div class="form-group mb-3">
+      <label for="article" class="form-label"><strong>Artikel:</strong></label>
+      <input type="text" id="article" formControlName="article" class="form-control" readonly />
+    </div>
+
+    <div class="form-group mb-3">
+      <label for="currentQuantity" class="form-label"><strong>Nuvarande antal:</strong></label>
+      <span class="current-quantity"
+        >{{ inventoryForm.get('currentQuantity')?.value }} {{ item.unit }}</span
+      >
+    </div>
+
+    <div class="form-group mb-3">
+      <label class="form-label"><strong>Typ av ändring:</strong></label>
+      <div class="radio-group">
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            formControlName="changeType"
+            value="add"
+            id="addRadio"
+          />
+          <label class="form-check-label" for="addRadio"> Lägg till (påfyllning) </label>
+        </div>
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            formControlName="changeType"
+            value="remove"
+            id="removeRadio"
+          />
+          <label class="form-check-label" for="removeRadio"> Ta bort (förbrukning) </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group mb-3">
+      <label for="quantityChange" class="form-label"><strong>Antal att ändra:</strong></label>
+      <div class="input-group">
+        <button type="button" class="btn btn-outline-secondary" (click)="decrementQuantity()">
+          -
+        </button>
+        <input
+          type="number"
+          id="quantityChange"
+          formControlName="quantityChange"
+          class="form-control text-center"
+          min="1"
+        />
+        <button type="button" class="btn btn-outline-secondary" (click)="incrementQuantity()">
+          +
+        </button>
+      </div>
+    </div>
+    <ngb-alert type="info" [dismissible]="false">
+      <strong>Nytt saldo:</strong> {{ newBalance }} {{ item.unit }} (efter
+      {{ inventoryForm.get('changeType')?.value === 'add' ? '+' : '-'
+      }}{{ inventoryForm.get('quantityChange')?.value }})
+    </ngb-alert>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-secondary" (click)="activeModal.dismiss()">Avbryt</button>
+  <button
+    type="button"
+    class="btn blue-button"
+    (click)="onSubmit()"
+    [disabled]="inventoryForm.invalid"
+  >
+    Uppdatera Saldo
+  </button>
+</div>

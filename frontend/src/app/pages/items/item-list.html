@@ -66,16 +66,19 @@
           <td>{{ item.quantity }}</td>
           <td>{{ item.unit }}</td>
           <td>{{ item.statusColor }}</td>
-          <td>
+          <td class="d-flex justify-content-evenly">
             <i class="bi bi-pencil me-2 blue-icon" (click)="startEdit(item)"></i>
-
             <i class="bi bi-trash me-2 blue-icon" (click)="deleteItem(item)"></i>
+            <button class="btn blue-button btn-sm" (click)="openStockUpdateModal(item)">
+              Saldoändring
+            </button>
           </td>
           }
         </tr>
+
         } @empty {
         <tr>
-          <td colspan="5" class="text-center text-muted">Inga artiklar hittades</td>
+          <td colspan="7" class="text-center text-muted">Inga artiklar hittades</td>
         </tr>
         }
       </tbody>
