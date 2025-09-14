@@ -7,7 +7,7 @@ import { CommonModule } from '@angular/common';
   selector: 'app-confirmation-modal-content',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './confirmation-modal.html',
+  templateUrl: './confirmation-delete-modal.html',
 })
 export class ConfirmationModal {
   @Input() item!: Item;

@@ -5,7 +5,7 @@ import { CreateItemRequest, Item } from '../../interfaces/item-model';
 import { FormsModule } from '@angular/forms';
 import { InventoryService } from '../../services/inventory.service';
 import { StockUpdateForm } from '../../components/stock-update-form/stock-update-form';
-import { ConfirmationModal } from '../../components/confirmation-modal/confirmation-modal';
+import { ConfirmationModal } from '../../components/confirmation-delete-modal/confirmation-delete-modal';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({

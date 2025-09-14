@@ -14,9 +14,6 @@
 ::placeholder {
   color: lightgray;
 }
-label {
-  font-weight: bold;
-}
 td {
   text-align: center;
   vertical-align: middle;
