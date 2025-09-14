@@ -17,13 +17,6 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 export class Items implements OnInit {
   items = signal<Item[]>([]);
   filteredItems = signal<Item[]>([]);
-  newItem: CreateItemRequest = {
-    name: '',
-    quantity: 0,
-    unit: '',
-    criticalStockThreshold: 10,
-  };
-
   editId: number | null = null;
   editItem: Item = {
     id: 0,
@@ -37,9 +30,6 @@ export class Items implements OnInit {
   };
 
   isAddFormVisible = signal(false);
-
-  // Stock update modal
-  selectedItemForStockUpdate: Item | null = null;
 
   // Delete confirmation modal state
   isDeletingItem = signal<boolean>(false);
@@ -57,16 +47,6 @@ export class Items implements OnInit {
   loadItems() {
     this.inventoryService.getItems().subscribe((data: Item[]) => {
       this.items.set(data);
-    });
-  }
-
-  // CREATE
-  addItem() {
-    this.inventoryService.createItem(this.newItem).subscribe({
-      next: (item: Item) => {
-        this.items.update((items) => [...items, item]);
-      },
-      error: (err: any) => alert('Misslyckades att skapa: ' + err.message),
     });
   }
 
@@ -124,10 +104,6 @@ export class Items implements OnInit {
     );
   }
 
-  closeDeleteModal(): void {
-    // No longer needed since modal handles close
-  }
-
   confirmDelete(item: Item): void {
     this.isDeletingItem.set(true);
 
@@ -143,59 +119,9 @@ export class Items implements OnInit {
     });
   }
 
-  // STOCK ADJUSTMENT
-  showAdjustModal = signal<boolean>(false);
-  selectedItemForAdjust = signal<Item | null>(null);
-  adjustmentAmount = signal<number>(0);
-
   openStockUpdateModal(item: Item): void {
     this.stockUpdateForm.openStockUpdateModal(item, (updatedItem: Item) => {
       this.items.update((items) => items.map((i) => (i.id === updatedItem.id ? updatedItem : i)));
-    });
-  }
-
-  openAdjustModal(item: Item) {
-    this.selectedItemForAdjust.set(item);
-    this.adjustmentAmount.set(0);
-    this.showAdjustModal.set(true);
-  }
-
-  closeAdjustModal() {
-    this.showAdjustModal.set(false);
-    this.selectedItemForAdjust.set(null);
-    this.adjustmentAmount.set(0);
-  }
-
-  quickAdjust(item: Item, change: number) {
-    this.inventoryService.adjustBalance(item.id, change).subscribe({
-      next: (response) => {
-        this.items.update((items) =>
-          items.map((i) => (i.id === item.id ? { ...i, ...response } : i))
-        );
-      },
-      error: (err: any) => alert('Misslyckades att justera lager: ' + err.message),
-    });
-  }
-
-  confirmAdjustment() {
-    const item = this.selectedItemForAdjust();
-    const amount = this.adjustmentAmount();
-
-    if (!item || !amount) return;
-
-    if (item.quantity + amount < 0) {
-      alert('Lagret kan inte bli negativt');
-      return;
-    }
-
-    this.inventoryService.adjustBalance(item.id, amount).subscribe({
-      next: (response) => {
-        this.items.update((items) =>
-          items.map((i) => (i.id === item.id ? { ...i, ...response } : i))
-        );
-        this.closeAdjustModal();
-      },
-      error: (err: any) => alert('Misslyckades att justera lager: ' + err.message),
     });
   }
 
