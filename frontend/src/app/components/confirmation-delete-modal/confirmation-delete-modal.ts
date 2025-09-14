@@ -4,12 +4,12 @@ import { Item } from '../../interfaces/item-model';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-confirmation-delete-modal-content',
+  selector: 'app-confirmation-delete-modal',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './confirmation-delete-modal.html',
 })
-export class ConfirmationModal {
+export class ConfirmationDeleteModal {
   @Input() item!: Item;
 
   constructor(public activeModal: NgbActiveModal) {}

@@ -11,7 +11,7 @@ export interface Item {
 
 export interface CreateItemRequest {
   name: string;
-  quantity: number;
+  quantity: number | null;
   unit: string;
-  criticalStockThreshold: number;
+  criticalStockThreshold: number | null;
 }

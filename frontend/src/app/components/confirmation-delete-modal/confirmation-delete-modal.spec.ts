@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ConfirmationModal } from './confirmation-delete-modal';
+import { ConfirmationDeleteModal } from './confirmation-delete-modal';
 
-describe('ConfirmationModal', () => {
-  let component: ConfirmationModal;
-  let fixture: ComponentFixture<ConfirmationModal>;
+describe('ConfirmationDeleteModal', () => {
+  let component: ConfirmationDeleteModal;
+  let fixture: ComponentFixture<ConfirmationDeleteModal>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ConfirmationModal],
+      imports: [ConfirmationDeleteModal],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(ConfirmationModal);
+    fixture = TestBed.createComponent(ConfirmationDeleteModal);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

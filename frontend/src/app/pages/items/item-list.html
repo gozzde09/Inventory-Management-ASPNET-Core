@@ -51,8 +51,16 @@
             }
           </td>
           <td class="d-flex justify-content-evenly align-items-center flex-wrap">
-            <i class="bi bi-pencil me-2 blue-icon fs-6" (click)="startEdit(item)"></i>
-            <i class="bi bi-trash me-2 blue-icon fs-6" (click)="openDeleteConfirmation(item)"></i>
+            <i
+              class="bi bi-pencil me-2 blue-icon fs-6"
+              ngbTooltip="Redigera"
+              (click)="startEdit(item)"
+            ></i>
+            <i
+              class="bi bi-trash me-2 blue-icon fs-6"
+              ngbTooltip="Radera"
+              (click)="openDeleteConfirmation(item)"
+            ></i>
             <button
               class="btn btn-blue btn-sm mt-1 mt-sm-0 p-1"
               (click)="openStockUpdateModal(item)"
@@ -65,7 +73,7 @@
         @if (editId === item.id) {
         <tr>
           <td>{{ index + 1 }}</td>
-          <td colspan="5">
+          <td colspan="6" class="text-start">
             <app-edit-item-form
               [item]="editItem"
               (save)="saveEdit($event)"

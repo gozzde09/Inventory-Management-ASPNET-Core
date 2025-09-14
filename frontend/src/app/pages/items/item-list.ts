@@ -5,13 +5,13 @@ import { CreateItemRequest, Item } from '../../interfaces/item-model';
 import { FormsModule } from '@angular/forms';
 import { InventoryService } from '../../services/inventory.service';
 import { StockUpdateForm } from '../../components/stock-update-form/stock-update-form';
-import { ConfirmationModal } from '../../components/confirmation-delete-modal/confirmation-delete-modal';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ConfirmationDeleteModal } from '../../components/confirmation-delete-modal/confirmation-delete-modal';
+import { NgbModal, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { EditItemForm } from '../../components/edit-item-form/edit-item-form';
 
 @Component({
   selector: 'app-items',
-  imports: [AddItemForm, CommonModule, FormsModule, EditItemForm],
+  imports: [AddItemForm, CommonModule, FormsModule, EditItemForm, NgbTooltipModule],
   templateUrl: './item-list.html',
   styleUrl: './item-list.css',
 })
@@ -94,7 +94,7 @@ export class Items implements OnInit {
 
   // DELETE
   openDeleteConfirmation(item: Item): void {
-    const modalRef = this.modalService.open(ConfirmationModal);
+    const modalRef = this.modalService.open(ConfirmationDeleteModal);
     modalRef.componentInstance.item = item;
 
     modalRef.result.then(

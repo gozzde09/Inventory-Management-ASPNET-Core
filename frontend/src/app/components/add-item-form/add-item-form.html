@@ -1,6 +1,6 @@
 <!-- Add new item -->
 <form class="row g-2 mb-4" (ngSubmit)="addItem()" #itemForm="ngForm">
-  <div class="col-md-3">
+  <div class="col-12 col-sm-6 col-md-3">
     <label for="name" class="form-label">Artikelnamn</label>
     <input
       id="name"
@@ -11,13 +11,13 @@
       required
     />
     @if(!newItem.name){
-    <div class="text-danger small">Namn är obligatoriskt.</div>
+    <div class="text-danger small mt-1">Namn är obligatoriskt.</div>
     } @else if (itemExists(newItem.name)) {
-    <div class="text-danger small">Artikeln finns redan.</div>
+    <div class="text-danger small mt-1">Artikeln finns redan.</div>
     }
   </div>
 
-  <div class="col-md-3">
+  <div class="col-12 col-sm-6 col-md-3">
     <label for="quantity" class="form-label">Antal</label>
     <input
       id="quantity"
@@ -30,17 +30,17 @@
       pattern="^[0-9]+$"
     />
     @if (!newItem.quantity) {
-    <div class="text-danger small">Antal är obligatoriskt.</div>
+    <div class="text-danger small mt-1">Antal är obligatoriskt.</div>
     } @else if( newItem.quantity==0) {
-    <div class="text-danger small">Antal får inte vara null.</div>
+    <div class="text-danger small mt-1">Antal får inte vara null.</div>
     } @else if( newItem.quantity<0) {
-    <div class="text-danger small">Antal får inte vara negativt.</div>
+    <div class="text-danger small mt-1">Antal får inte vara negativt.</div>
     } @else if (newItem.quantity && !newItem.quantity.toString().match('^[0-9]+$')) {
-    <div class="text-danger small">Antal får bara innehålla siffror.</div>
+    <div class="text-danger small mt-1">Antal får bara innehålla siffror.</div>
     }
   </div>
 
-  <div class="col-md-3">
+  <div class="col-12 col-sm-6 col-md-3">
     <label for="unit" class="form-label">Enhet</label>
     <input
       id="unit"
@@ -52,14 +52,21 @@
       pattern="^[^\d]+$"
     />
     @if (!newItem.unit) {
-    <div class="text-danger small">Enhet är obligatoriskt.</div>
+    <div class="text-danger small mt-1">Enhet är obligatoriskt.</div>
     } @else if ( newItem.unit && !newItem.unit.match('^[^\\d]+$')) {
-    <div class="text-danger small">Enhet får inte innehålla siffror.</div>
+    <div class="text-danger small mt-1">Enhet får inte innehålla siffror.</div>
     }
   </div>
 
-  <div class="col-md-3">
-    <label for="threshold" class="form-label">Minsta lagernivå</label>
+  <div class="col-12 col-sm-6 col-md-3 text-nowrap">
+    <label for="threshold" class="form-label">
+      Minsta lagernivå
+      <i
+        class="bi bi-info-circle ms-0 text-blue mb-3"
+        ngbTooltip="Varningsgräns: När lagret når denna nivå bör varning skickas."
+        style="cursor: pointer"
+      ></i
+    ></label>
     <input
       id="threshold"
       type="text"
@@ -68,9 +75,12 @@
       [(ngModel)]="newItem.criticalStockThreshold"
       name="threshold"
       required
+      pattern="^[0-9]+$"
     />
     @if (!newItem.criticalStockThreshold) {
-    <div class="text-danger small">Minsta lagernivå är obligatoriskt.</div>
+    <div class="text-danger small mt-1">Minsta lagernivå är obligatoriskt.</div>
+    }@else if( newItem.criticalStockThreshold==0) {
+    <div class="text-danger small mt-1">Antal får inte vara null.</div>
     }
   </div>
 

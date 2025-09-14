@@ -1,9 +1,5 @@
-<form
-  class="d-flex flex-column flex-sm-row justify-content-evenly gap-4"
-  (ngSubmit)="onSave()"
-  #editForm="ngForm"
->
-  <div class="form-group mb-0">
+<form class="row g-2 mb-2" (ngSubmit)="onSave()" #editForm="ngForm">
+  <div class="col-12 col-sm-6 col-md-3">
     <label class="form-label small mb-1">Artikelnamn</label>
     <input
       type="text"
@@ -14,11 +10,11 @@
       required
     />
     @if (!editItem.name) {
-    <div class="text-danger small">Namn är obligatoriskt.</div>
+    <div class="text-danger small mt-1">Namn är obligatoriskt.</div>
     }
   </div>
 
-  <div class="form-group mb-0">
+  <div class="col-12 col-sm-6 col-md-3">
     <label class="form-label small mb-1">Enhet</label>
     <input
       type="text"
@@ -30,13 +26,13 @@
       pattern="^[^\d]+$"
     />
     @if (!editItem.unit) {
-    <div class="text-danger small">Enhet är obligatoriskt.</div>
+    <div class="text-danger small mt-1">Enhet är obligatoriskt.</div>
     } @else if (editItem.unit && !editItem.unit.match('^[^\\d]+$')) {
-    <div class="text-danger small">Enhet får inte innehålla siffror.</div>
+    <div class="text-danger small mt-1">Enhet får inte innehålla siffror.</div>
     }
   </div>
 
-  <div class="form-group mb-0">
+  <div class="col-12 col-sm-6 col-md-3">
     <label class="form-label small mb-1">Minsta lagernivå</label>
     <input
       type="text"
@@ -45,13 +41,18 @@
       class="form-control form-control-sm"
       placeholder="Varningsgräns"
       required
+      pattern="^[0-9]+$"
     />
     @if (!editItem.criticalStockThreshold) {
-    <div class="text-danger small">Minsta lagernivå är obligatoriskt.</div>
+    <div class="text-danger small mt-1">Minsta lagernivå är obligatoriskt.</div>
+    } @else if (editItem.criticalStockThreshold == 0) {
+    <div class="text-danger small mt-1">Antal får inte vara null.</div>
+    } @else if (!editItem.criticalStockThreshold.toString().match('^[0-9]+$')) {
+    <div class="text-danger small mt-1">Antal får bara innehålla siffror.</div>
     }
   </div>
 
-  <div class="d-flex gap-1 flex-wrap justify-content-center">
+  <div class="col-12 col-sm-6 col-md-3 d-flex gap-2 align-items-center justify-content-center mt-4">
     <button class="btn btn-success btn-sm" type="submit" [disabled]="!editForm.form.valid">
       Uppdatera
     </button>

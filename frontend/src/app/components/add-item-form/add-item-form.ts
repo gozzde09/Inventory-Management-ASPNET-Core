@@ -2,20 +2,20 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CreateItemRequest, Item } from '../../interfaces/item-model';
 import { FormsModule } from '@angular/forms';
+import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-add-item-form',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, NgbTooltipModule],
   templateUrl: './add-item-form.html',
-  styleUrl: './add-item-form.css',
   standalone: true,
 })
 export class AddItemForm {
   newItem: CreateItemRequest = {
     name: '',
-    quantity: 0,
+    quantity: null,
     unit: '',
-    criticalStockThreshold: 0,
+    criticalStockThreshold: null,
   };
   @Input() existingItems: Item[] = [];
   @Output() itemAdded = new EventEmitter<CreateItemRequest>();
@@ -27,7 +27,12 @@ export class AddItemForm {
   }
 
   addItem() {
-    if (this.newItem.name && this.newItem.unit && this.newItem.quantity >= 0) {
+    if (
+      this.newItem.name &&
+      this.newItem.unit &&
+      this.newItem.quantity &&
+      this.newItem.criticalStockThreshold
+    ) {
       this.itemAdded.emit(this.newItem);
       this.resetForm();
     }
@@ -41,9 +46,9 @@ export class AddItemForm {
   resetForm() {
     this.newItem = {
       name: '',
-      quantity: 0,
+      quantity: null,
       unit: '',
-      criticalStockThreshold: 0,
+      criticalStockThreshold: null,
     };
   }
 }
