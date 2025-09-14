@@ -36,33 +36,14 @@
         </tr>
       </thead>
       <tbody>
-        @for (item of items(); track item.id; let index=$index) {
+        @for (item of items(); track item.id; let index = $index) {
         <tr [ngClass]="getStatusClass(item.statusColor)">
-          <!-- Edit-mode -->
-          @if (editId === item.id) {
-          <td>{{ index + 1 }}</td>
-          <td>
-            <input [(ngModel)]="editItem.name" class="form-control" name="editName" />
-          </td>
-          <td>
-            <input [(ngModel)]="editItem.unit" class="form-control" name="editUnit" />
-          </td>
-          <td class="d-none d-sm-table-cell"></td>
-          <td>
-            <div class="d-flex justify-content-evenly align-items-center mt-1 flex-wrap">
-              <button class="btn btn-success btn-sm mb-1 mb-sm-0" (click)="saveEdit(item)">
-                Uppdatera
-              </button>
-              <button class="btn btn-secondary btn-sm" (click)="cancelEdit()">Avbryt</button>
-            </div>
-          </td>
-          } @else {
           <td>{{ index + 1 }}</td>
           <td>{{ item.name }}</td>
           <td>{{ item.quantity }} {{ item.unit }}</td>
           <td class="d-none d-sm-table-cell">
             @if (item.statusColor === 'red') {
-            <span class="badge fw-medium text-bg-danger"> Kritiskt</span>
+            <span class="badge fw-medium text-bg-danger">Kritiskt</span>
             } @else if (item.statusColor === 'yellow') {
             <span class="badge fw-medium text-bg-warning">Lågt</span>
             } @else if (item.statusColor === 'green') {
@@ -72,14 +53,27 @@
           <td class="d-flex justify-content-evenly align-items-center flex-wrap">
             <i class="bi bi-pencil me-2 blue-icon fs-6" (click)="startEdit(item)"></i>
             <i class="bi bi-trash me-2 blue-icon fs-6" (click)="openDeleteConfirmation(item)"></i>
-            <button class="btn btn-blue btn-sm mt-1 mt-sm-0" (click)="openStockUpdateModal(item)">
+            <button
+              class="btn btn-blue btn-sm mt-1 mt-sm-0 p-1"
+              (click)="openStockUpdateModal(item)"
+            >
               Saldoändring
             </button>
           </td>
-          }
         </tr>
-
-        } @empty {
+        <!-- Edit-mode -->
+        @if (editId === item.id) {
+        <tr>
+          <td>{{ index + 1 }}</td>
+          <td colspan="5">
+            <app-edit-item-form
+              [item]="editItem"
+              (save)="saveEdit($event)"
+              (cancel)="cancelEdit()"
+            ></app-edit-item-form>
+          </td>
+        </tr>
+        } } @empty {
         <tr>
           <td colspan="5" class="text-center text-muted">Inga artiklar hittades</td>
         </tr>

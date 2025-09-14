@@ -7,10 +7,11 @@ import { InventoryService } from '../../services/inventory.service';
 import { StockUpdateForm } from '../../components/stock-update-form/stock-update-form';
 import { ConfirmationModal } from '../../components/confirmation-delete-modal/confirmation-delete-modal';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { EditItemForm } from '../../components/edit-item-form/edit-item-form';
 
 @Component({
   selector: 'app-items',
-  imports: [AddItemForm, CommonModule, FormsModule],
+  imports: [AddItemForm, CommonModule, FormsModule, EditItemForm],
   templateUrl: './item-list.html',
   styleUrl: './item-list.css',
 })
@@ -68,14 +69,18 @@ export class Items implements OnInit {
 
   // EDIT
   startEdit(item: Item) {
-    this.editId = item.id;
-    this.editItem = { ...item };
+    if (this.editId === item.id) {
+      this.cancelEdit();
+    } else {
+      this.editId = item.id;
+      this.editItem = { ...item };
+    }
   }
   cancelEdit() {
     this.editId = null;
   }
-  saveEdit(original: Item) {
-    this.inventoryService.updateItem(this.editItem).subscribe({
+  saveEdit(updatedItem: Item) {
+    this.inventoryService.updateItem(updatedItem).subscribe({
       next: (updatedItem: Item) => {
         this.items.update((items) =>
           items.map((item) => (item.id === updatedItem.id ? updatedItem : item))

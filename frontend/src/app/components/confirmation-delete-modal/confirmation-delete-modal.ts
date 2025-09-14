@@ -4,7 +4,7 @@ import { Item } from '../../interfaces/item-model';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-confirmation-modal-content',
+  selector: 'app-confirmation-delete-modal-content',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './confirmation-delete-modal.html',

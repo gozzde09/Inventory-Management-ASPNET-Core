@@ -10,7 +10,7 @@
       name="name"
       required
     />
-    @if( !newItem.name){
+    @if(!newItem.name){
     <div class="text-danger small">Namn är obligatoriskt.</div>
     } @else if (itemExists(newItem.name)) {
     <div class="text-danger small">Artikeln finns redan.</div>
@@ -59,7 +59,7 @@
   </div>
 
   <div class="col-md-3">
-    <label for="threshold" class="form-label">Tröskelvärde</label>
+    <label for="threshold" class="form-label">Minsta lagernivå</label>
     <input
       id="threshold"
       type="text"
@@ -70,7 +70,7 @@
       required
     />
     @if (!newItem.criticalStockThreshold) {
-    <div class="text-danger small">Tröskelvärde är obligatoriskt.</div>
+    <div class="text-danger small">Minsta lagernivå är obligatoriskt.</div>
     }
   </div>
 

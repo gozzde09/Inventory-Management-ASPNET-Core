@@ -6,7 +6,7 @@ body {
 }
 body {
   margin: 0;
-  font-family: Roboto, 'Helvetica Neue', sans-serif;
+  font-family: Verdana, 'Helvetica Neue', sans-serif;
 }
 .btn-blue {
   background-color: #005b89;
@@ -15,4 +15,7 @@ body {
 .btn-blue:hover {
   background-color: #004a6c;
   color: #fff;
+}
+label {
+  font-weight: bold;
 }
