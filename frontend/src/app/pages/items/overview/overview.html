@@ -35,7 +35,6 @@
 
   <div class="navigate-button">
     <button class="btn btn-primary" (click)="navigateToItems()">GÅ TILL LAGERHANTERING</button>
-    <div class="annotation">Huvudknapp för att navigera till lagerhanteringssidan</div>
   </div>
 
   <div class="recent-activity">
@@ -48,9 +47,9 @@
         </div>
         <p class="mb-1">
           {{
-            getStatusText(item.status) === 'OK'
+            getStatusText(item.status) === 'Green'
               ? 'Uppdaterat saldo'
-              : getStatusText(item.status) === 'Low'
+              : getStatusText(item.status) === 'Yellow'
               ? 'Lågt saldo varning'
               : 'Kritiskt saldo varning'
           }}
