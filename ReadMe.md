@@ -1,10 +1,4 @@
-# Inventory Management System
-
-*[Svenska version finns nedan](#svenska) / [Swedish version available below](#svenska)*
-
-## English
-
-### 🏥 Healthcare Inventory Management System
+### 🏥 Inventory Management System
 
 A fullstack CRUD application built with ASP.NET Core 9 API and SQLite database, featuring an Angular 20 frontend. 
 This web application is designed to manage inventory status for different supplies.
@@ -131,53 +125,5 @@ Inventory-Management-ASPNET-Core/
 - `DELETE /api/items/{id}` - Delete an item
 - `PATCH /api/items/{id}/adjust-balance` - Update item quantity
 
-## Svenska
-
-### 🏥 Lagersystem för Vårdcentral
-
-En fullstack CRUD-applikation byggd med ASP.NET Core 9 API och SQLite-databas, med en Angular 20 frontend. 
-Denna webbapplikation är designad för att hjälpa vårdcentraler att hantera lagerstatus för medicinska artiklar.
-
-### 🚀 Funktioner
-
-- **Artikelhantering**: Lista alla registrerade artiklar med namn, lagersaldo och enhet
-- **Skapa nya artiklar**: Lägg till nya artiklar med namn, initialt antal, minimum värde och enhet
-- **Redigera artiklar**: Ändra artikelns namn, tröskel och enhet
-- **Ta bort artiklar**: Radera artiklar från lagret
-- **Uppdatera lagersaldo**: Öka eller minska lagerbalansen (saldo kan inte bli negativt)
-- **Låg lager-varning**: Färgkodade varningar när en artikels saldo är under en definierad gräns
-
-### 🛠️ Teknikstack
-
-**Backend:**
-- ASP.NET Core 9 Web API
-- Entity Framework Core
-- SQLite-databas
-- RESTful API med JSON-kommunikation
-
-**Frontend:**
-- Angular 20
-- TypeScript
-- HTML/CSS
-- Responsiv design
-- Bootstrap / Bootstrap-ikoner
-
-### 🗄️ Databaskonfiguration
-
-Denna applikation använder SQLite som databas. Databasfilen kommer automatiskt att skapas i projektmappen när du första gången kör applikationen.
-
-**Antaganden om databasschema:**
-- Items-tabell med kolumner: Id, Name, Quantity, Unit, CriticalStockThreshold, Status
-- Automatisk databasskapande vid första körningen
-- Primärnyckel auto-increment för artikel-ID:n
-
-### ⚠️ Antaganden och Begränsningar
-
-1. **Enanvändarsystem**: Ingen autentisering eller användarhantering implementerad
-2. **Lokal databas**: SQLite-databas lagrad lokalt, inte lämplig för produktionsmiljöer med flera användare
-3. **Grundläggande validering**: Kräver inmatning, kvantitet kan ej vara negativ, noll eller innehålla bokstäver
-4. **Allmänt lagerhanteringssystem**: Designad för att hantera lager av alla typer av artiklar, inte begränsad till medicinska förråd
-5. **Lokal körning**: Applikationen körs lokalt på utvecklarens maskin
-6. **Unika artikelnamn**: Varje artikel i lagret måste ha ett unikt namn
 
 
