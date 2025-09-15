@@ -3,7 +3,7 @@
 A fullstack CRUD application built with ASP.NET Core 9 API and SQLite database, featuring an Angular 20 frontend.
 This web application is designed to manage inventory status for different supplies.
 
-https://github.com/user-attachments/assets/7aff56f1-3a08-47d1-90ab-63e6f2b1906a
+https://github.com/user-attachments/assets/5f4ed3e6-f2d0-4c13-9a55-acb7ff711140
 
 ### 🚀 Features
 
@@ -31,6 +31,16 @@ https://github.com/user-attachments/assets/7aff56f1-3a08-47d1-90ab-63e6f2b1906a
 - HTML/CSS
 - Responsive Design
 - Bootstrap / Bootstrap Icons
+
+🌐 SEO & Design Principles
+
+This project follows modern SEO best practices, accessibility standards, and design principles to ensure usability and discoverability:
+- **SEO (100/100)**: Semantic HTML structure, descriptive titles, meta tags, and clean URLs.
+- **Accessibility (100/100)**: WCAG-compliant contrast, keyboard navigation, ARIA attributes, and screen reader support.
+- **Best Practices (100/100)**: Secure HTTPS requests, responsive layout, mobile-friendly design.
+- **Performance (54/100)**: Optimized for development setup; performance score is lower due to unminified assets and Angular dev server. In a production build, performance would be significantly improved.
+
+<img width="450" height="150" alt="SEO-LightHouse" src="https://github.com/user-attachments/assets/601c58be-b11c-475f-99aa-8685b4a54f77" />
 
 ### 🔍 API Endpoints
 
@@ -124,7 +134,7 @@ This application uses SQLite as the database. The database file will be automati
 ```
 Inventory-Management-ASPNET-Core/
 ├── backend/               # ASP.NET Core Web API
-│   ├── Controllers/            # API Controllers
+│   ├── Controllers/             # API Controllers
 │   ├── Models/                  # Data Models
 │   ├── Services/                # Services
 │   └── Program.cs               # API Entry Point
