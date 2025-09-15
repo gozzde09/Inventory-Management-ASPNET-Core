@@ -1,6 +1,6 @@
 ﻿using InventoryManagement.Models;
+using InventoryManagement.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace InventoryManagement.Controllers
 {
@@ -8,11 +8,11 @@ namespace InventoryManagement.Controllers
   [Route("api/[controller]")]
   public class ItemsController : ControllerBase
   {
-    private readonly ItemDbContext _context;
+    private readonly IItemService _itemService;
 
-    public ItemsController(ItemDbContext context)
+    public ItemsController(IItemService itemService)
     {
-      _context = context;
+      _itemService = itemService;
     }
 
     // CREATE - Add a new item
@@ -24,26 +24,22 @@ namespace InventoryManagement.Controllers
         return BadRequest(ModelState);
       }
 
-      // Validation: Check for duplicate names
-      var existingItem = await _context.Items
-          .FirstOrDefaultAsync(i => i.Name.ToLower() == item.Name.ToLower());
-
-      if (existingItem != null)
+      try
       {
-        return Conflict($"An item with name '{item.Name}' already exists.");
+        var createdItem = await _itemService.CreateItemAsync(item);
+        return Created("", createdItem); // 201
       }
-
-      await _context.AddAsync(item);
-      await _context.SaveChangesAsync();
-
-      return Created("", item); // 201
+      catch (InvalidOperationException ex)
+      {
+        return Conflict(ex.Message);
+      }
     }
 
     // READ - Get all items
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Item>>> GetItems()
     {
-      var items = await _context.Items.AsNoTracking().ToListAsync();
+      var items = await _itemService.GetItemsAsync();
       return Ok(items);
     }
 
@@ -60,68 +56,53 @@ namespace InventoryManagement.Controllers
         return BadRequest(ModelState);
       }
 
-      var itemFromDb = await _context.Items.FindAsync(id);
-      if (itemFromDb is null)
+      try
       {
-        return NotFound($"Item with ID {id} not found.");
+        var updatedItem = await _itemService.EditItemAsync(id, item);
+        return Ok(updatedItem);
       }
-
-      // Check for duplicate names (excluding current item)
-      var duplicateItem = await _context.Items
-          .FirstOrDefaultAsync(i => i.Name.ToLower() == item.Name.ToLower() && i.Id != id);
-
-      if (duplicateItem != null)
+      catch (KeyNotFoundException ex)
       {
-        return Conflict($"An item with name '{item.Name}' already exists.");
+        return NotFound(ex.Message);
       }
-      // Update allowed fields
-      itemFromDb.Name = item.Name;
-      itemFromDb.Quantity = item.Quantity;
-      itemFromDb.Unit = item.Unit;
-      itemFromDb.CriticalStockThreshold = item.CriticalStockThreshold;
-
-      await _context.SaveChangesAsync();
-
-      return Ok(itemFromDb);
+      catch (InvalidOperationException ex)
+      {
+        return Conflict(ex.Message);
+      }
     }
 
     // DELETE
     [HttpDelete("{id:int}")]
     public async Task<IActionResult> DeleteItem(int id)
     {
-      var item = await _context.Items.FindAsync(id);
-      if (item is null)
+      try
       {
-        return NotFound($"Item with ID {id} not found.");
+        await _itemService.DeleteItemAsync(id);
+        return NoContent();
       }
-
-      _context.Items.Remove(item);
-      await _context.SaveChangesAsync();
-
-      return NoContent();
+      catch (KeyNotFoundException ex)
+      {
+        return NotFound(ex.Message);
+      }
     }
 
     // PATCH - Adjust stock balance
     [HttpPatch("{id:int}/adjust-balance")]
     public async Task<IActionResult> AdjustBalance(int id, [FromBody] int change)
     {
-      var item = await _context.Items.FindAsync(id);
-      if (item is null)
+      try
       {
-        return NotFound($"Item with ID {id} not found.");
+        var updatedItem = await _itemService.AdjustBalanceAsync(id, change);
+        return Ok(updatedItem);
       }
-
-      // Prevent negative stock
-      int newBalance = item.Quantity + change;
-      if (newBalance < 0)
+      catch (KeyNotFoundException ex)
       {
-        return BadRequest($"Insufficient stock. Current: {item.Quantity}, Requested change: {change}");
+        return NotFound(ex.Message);
       }
-
-      item.Quantity = newBalance;
-      await _context.SaveChangesAsync();
-
-      return Ok(item);
+      catch (InvalidOperationException ex)
+      {
+        return BadRequest(ex.Message);
+      }
     }
   }
 }
