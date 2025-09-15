@@ -1,31 +1,24 @@
-# ﻿Lagerhantering för sjukvårdsmaterial
+### 🏥 Inventory Management System
 
-# Beskrivning
+A fullstack CRUD application built with ASP.NET Core 9 API and SQLite database, featuring an Angular 20 frontend.
+This web application is designed to manage inventory status for different supplies.
 
-Denna webbapplikation är byggd för att hjälpa en låtsas vårdcentral att hålla koll på lagerstatus för sjukvårdsmaterial.
+### 🚀 Features
 
-# Applikationen består av:
+- **Item Management**: List all registered items with name, quantity in stock, and unit
+- **Create New Items**: Add new items with name, initial quantity, threshold and unit
+- **Edit Items**: Edit items with name, threshold and unit
+- **Delete Items**: Remove items from inventory
+- **Update Stock Balance**: Increase or decrease inventory balance (balance cannot go negative)
+- **Low Stock Warning**: Color-coded warnings when an item's balance is below a defined threshold
 
-1- Backend: ASP.NET Core 9 Web API (CRUD för artiklar och endpoint för saldoändring).
+### 🛠️ Technology Stack
 
-2- Frontend: Angular 20 (lista artiklar, uppdatera antal och visa varningsindikatorer).
+**Backend:**
 
-3- Databas: SQLite, kommunikation via JSON.
-
-# Funktionalitet
-
-1- Lista artiklar
-Visa alla registrerade artiklar med namn, antal i lager och enhet.
-
-2- Skapa artikel
-Lägga till ny artikel med namn, initialt antal och enhet.
-
-3- Uppdatera saldo
-Öka eller minska lagersaldo. Saldo kan inte bli negativt.
-
-4- Låg lager varning
-Om en artikels saldo är under en definierad gräns visas en färgkodad varning.
-
+- ASP.NET Core 9 Web API
+- Entity Framework Core
+- SQLite Database
 - RESTful API with JSON communication
 
 **Frontend:**
@@ -35,6 +28,14 @@ Om en artikels saldo är under en definierad gräns visas en färgkodad varning.
 - HTML/CSS
 - Responsive Design
 - Bootstrap / Bootstrap Icons
+
+### 🔍 API Endpoints
+
+- `GET /api/items` - Get all items
+- `POST /api/items` - Create a new item
+- `PUT /api/items/{id}` - Update an item
+- `DELETE /api/items/{id}` - Delete an item
+- `PATCH /api/items/{id}/adjust-balance` - Update item quantity
 
 ### ⚠️ Assumptions and Limitations
 
@@ -123,6 +124,7 @@ Inventory-Management-ASPNET-Core/
 │   ├── Models/               # Data Models
 │   ├── Services/             # Services
 │   └── Program.cs            # API Entry Point
+
 ├── frontend/             # Angular Frontend
 │   ├── src/
 │   │   ├── app/             # Angular app
@@ -132,63 +134,3 @@ Inventory-Management-ASPNET-Core/
 │   └── package.json         # NPM Dependencies
 └── README.md
 ```
-
-### 🔍 API Endpoints
-
-- `GET /api/items` - Get all items
-- `POST /api/items` - Create a new item
-- `PUT /api/items/{id}` - Update an item
-- `DELETE /api/items/{id}` - Delete an item
-- `PATCH /api/items/{id}/adjust-balance` - Update item quantity
-
-## Svenska
-
-### 🏥 Lagersystem för Vårdcentral
-
-En fullstack CRUD-applikation byggd med ASP.NET Core 9 API och SQLite-databas, med en Angular 20 frontend.
-Denna webbapplikation är designad för att hjälpa vårdcentraler att hantera lagerstatus för medicinska artiklar.
-
-### 🚀 Funktioner
-
-- **Artikelhantering**: Lista alla registrerade artiklar med namn, lagersaldo och enhet
-- **Skapa nya artiklar**: Lägg till nya artiklar med namn, initialt antal, minimum värde och enhet
-- **Redigera artiklar**: Ändra artikelns namn, tröskel och enhet
-- **Ta bort artiklar**: Radera artiklar från lagret
-- **Uppdatera lagersaldo**: Öka eller minska lagerbalansen (saldo kan inte bli negativt)
-- **Låg lager-varning**: Färgkodade varningar när en artikels saldo är under en definierad gräns
-
-### 🛠️ Teknikstack
-
-**Backend:**
-
-- ASP.NET Core 9 Web API
-- Entity Framework Core
-- SQLite-databas
-- RESTful API med JSON-kommunikation
-
-**Frontend:**
-
-- Angular 20
-- TypeScript
-- HTML/CSS
-- Responsiv design
-- Bootstrap / Bootstrap-ikoner
-
-### 🗄️ Databaskonfiguration
-
-Denna applikation använder SQLite som databas. Databasfilen kommer automatiskt att skapas i projektmappen när du första gången kör applikationen.
-
-**Antaganden om databasschema:**
-
-- Items-tabell med kolumner: Id, Name, Quantity, Unit, CriticalStockThreshold, Status
-- Automatisk databasskapande vid första körningen
-- Primärnyckel auto-increment för artikel-ID:n
-
-### ⚠️ Antaganden och Begränsningar
-
-1. **Enanvändarsystem**: Ingen autentisering eller användarhantering implementerad
-2. **Lokal databas**: SQLite-databas lagrad lokalt, inte lämplig för produktionsmiljöer med flera användare
-3. **Grundläggande validering**: Kräver inmatning, kvantitet kan ej vara negativ, noll eller innehålla bokstäver
-4. **Allmänt lagerhanteringssystem**: Designad för att hantera lager av alla typer av artiklar, inte begränsad till medicinska förråd
-5. **Lokal körning**: Applikationen körs lokalt på utvecklarens maskin
-6. **Unika artikelnamn**: Varje artikel i lagret måste ha ett unikt namn
