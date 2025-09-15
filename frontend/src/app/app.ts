@@ -7,7 +7,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
   selector: 'app-root',
   imports: [CommonModule, RouterOutlet, RouterLink, NgbModule, RouterLinkActive],
   templateUrl: './app.html',
-  styleUrl: './app.css',
 })
 export class App {
   protected readonly title = signal('Frontend');

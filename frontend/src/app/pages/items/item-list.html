@@ -1,8 +1,4 @@
 <div class="container mt-4">
-  <div class="d-flex justify-content-between align-items-center mb-3">
-    <h2>Lagerhantering</h2>
-  </div>
-
   @if(!isAddFormVisible()) {
   <div class="d-flex justify-content-end mb-3">
     <button class="btn btn-success" (click)="openAddForm()" [disabled]="isAddFormVisible()">
@@ -51,16 +47,18 @@
             }
           </td>
           <td class="d-flex justify-content-evenly align-items-center flex-wrap">
-            <i
-              class="bi bi-pencil me-2 blue-icon fs-6"
-              ngbTooltip="Redigera"
-              (click)="startEdit(item)"
-            ></i>
-            <i
-              class="bi bi-trash me-2 blue-icon fs-6"
-              ngbTooltip="Radera"
-              (click)="openDeleteConfirmation(item)"
-            ></i>
+            <div>
+              <i
+                class="bi bi-pencil me-2 blue-icon fs-6"
+                ngbTooltip="Redigera"
+                (click)="startEdit(item)"
+              ></i>
+              <i
+                class="bi bi-trash me-2 blue-icon fs-6"
+                ngbTooltip="Radera"
+                (click)="openDeleteConfirmation(item)"
+              ></i>
+            </div>
             <button
               class="btn btn-blue btn-sm mt-1 mt-sm-0 p-1"
               (click)="openStockUpdateModal(item)"

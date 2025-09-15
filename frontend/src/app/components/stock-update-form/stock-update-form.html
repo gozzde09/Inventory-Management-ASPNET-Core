@@ -67,7 +67,7 @@
       </div>
       @if (inventoryForm.get('quantityChange')?.errors?.['required']) {
       <div class="text-danger small mt-1">Antal är obligatoriskt.</div>
-      } @else if (inventoryForm.get('quantityChange')?.errors?.['notZero']) {
+      } @else if (inventoryForm.get('quantityChange')?.value==0) {
       <div class="text-danger small mt-1">Antal får inte vara 0.</div>
       } @else if (inventoryForm.get('quantityChange')?.errors?.['nonNegative']) {
       <div class="text-danger small mt-1">Antal får inte vara negativt.</div>
