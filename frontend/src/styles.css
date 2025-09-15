@@ -26,13 +26,11 @@ main {
 .text-blue {
   color: #005b89;
 }
-.btn-outline-secondary,
-.btn-secondary {
+.btn-outline-secondary {
   border-color: #37474f;
   color: #37474f;
 }
-.btn-outline-secondary:hover,
-.btn-secondary {
+.btn-outline-secondary:hover {
   background-color: #37474f;
   color: #fff;
 }

@@ -52,6 +52,6 @@ export class Overview implements OnInit {
     return this.items()
       .slice()
       .sort((a, b) => b.id - a.id)
-      .slice(0, 5);
+      .slice(0, 10);
   }
 }

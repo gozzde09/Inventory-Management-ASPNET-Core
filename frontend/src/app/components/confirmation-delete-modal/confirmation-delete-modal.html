@@ -5,7 +5,7 @@
 </div>
 
 <div class="modal-body">
-  <p class="confirmation-message">
+  <p>
     Är du säker på att du vill ta bort <strong>"{{ item.name }}"</strong>?
   </p>
   <ngb-alert type="warning" [dismissible]="false">
@@ -15,6 +15,6 @@
 </div>
 
 <div class="modal-footer">
-  <button type="button" class="btn btn-secondary" (click)="onCancel()">Avbryt</button>
+  <button type="button" class="btn btn-outline-secondary" (click)="onCancel()">Avbryt</button>
   <button type="button" class="btn btn-danger" (click)="onConfirm()">Ta bort</button>
 </div>

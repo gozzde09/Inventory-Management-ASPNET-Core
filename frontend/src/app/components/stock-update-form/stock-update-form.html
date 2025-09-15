@@ -1,12 +1,7 @@
 <!-- Modal -->
 <div class="modal-header">
   <h4 class="modal-title">Saldoändring</h4>
-  <button
-    type="button"
-    class="btn-close"
-    aria-label="Close"
-    (click)="activeModal.dismiss()"
-  ></button>
+  <button type="button" aria-label="Close" (click)="activeModal.dismiss()"></button>
 </div>
 <div class="modal-body">
   <form [formGroup]="inventoryForm" (ngSubmit)="onSubmit()">
@@ -115,7 +110,9 @@
 </div>
 
 <div class="modal-footer">
-  <button type="button" class="btn btn-secondary" (click)="activeModal.dismiss()">Avbryt</button>
+  <button type="button" class="btn btn-outline-secondary" (click)="activeModal.dismiss()">
+    Avbryt
+  </button>
   <button
     type="button"
     class="btn btn-blue"
