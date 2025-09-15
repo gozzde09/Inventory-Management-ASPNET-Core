@@ -4,9 +4,9 @@
     <div class="col-md-4 mb-3">
       <div class="card text-center">
         <div class="card-body my-4">
-          <h5 class="card-title text-success">
+          <h4 class="h5 card-title text-success">
             <i class="bi bi-circle-fill me-2"></i>{{ totalItems() }} Artiklar
-          </h5>
+          </h4>
           <i class="card-text">Totalt antal artiklar i systemet.</i>
         </div>
       </div>
@@ -15,9 +15,9 @@
     <div class="col-md-4 mb-3">
       <div class="card text-center">
         <div class="card-body my-4">
-          <h5 class="card-title text-warning">
+          <h4 class="h5 card-title text-warning">
             <i class="bi bi-circle-fill me-2"></i>{{ lowStock() }} Lågt saldo
-          </h5>
+          </h4>
           <i class="card-text">Artiklar som behöver påfyllning.</i>
         </div>
       </div>
@@ -26,9 +26,9 @@
     <div class="col-md-4 mb-3">
       <div class="card text-center">
         <div class="card-body my-4">
-          <h5 class="card-title text-danger">
+          <h4 class="h5 card-title text-danger">
             <i class="bi bi-circle-fill me-2"></i>{{ criticalStock() }} Kritiskt lågt
-          </h5>
+          </h4>
           <i class="card-text">Artiklar med akut behov av påfyllning.</i>
         </div>
       </div>
@@ -51,10 +51,10 @@
         }"
       >
         <div class="d-flex w-100 justify-content-between">
-          <h6 class="mb-1">{{ item.name }}</h6>
+          <p class="h6 mb-1">{{ item.name }}</p>
           <small>{{ item.quantity }} st kvar</small>
         </div>
-        <i class="mb-1 text-small">
+        <i class="mb-1">
           {{
             item.statusColor === 'green'
               ? ''

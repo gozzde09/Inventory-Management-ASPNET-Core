@@ -8,13 +8,18 @@
       [routerLink]="'/'"
     />
     <a class="navbar-brand" [routerLink]="'/'" style="color: #f3f0ef">Lager Ugglan </a>
-    <button class="navbar-toggler" type="button" (click)="isCollapsed = !isCollapsed">
+    <button
+      class="navbar-toggler"
+      type="button"
+      aria-label="menu"
+      (click)="isCollapsed = !isCollapsed"
+    >
       <span class="navbar-toggler-icon"></span>
     </button>
 
     <div class="navbar-collapse" [ngbCollapse]="isCollapsed">
       <ul class="navbar-nav me-auto">
-        <li class="nav-item">
+        <li class="nav-item text-end">
           <a
             class="nav-link"
             [routerLink]="'/overview'"
@@ -24,7 +29,7 @@
             Översikt
           </a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item text-end">
           <a class="nav-link" [routerLink]="'/items'" routerLinkActive="active">Lager</a>
         </li>
       </ul>
@@ -42,16 +47,16 @@
   <div class="container">
     <div class="row">
       <div class="col-md-9">
-        <h6 class="fw-bold mb-3">
+        <p class="h6 fw-bold">
           <img src="/owl-icon.svg" alt="icon" style="height: 30px" />
           Lager Ugglan
-        </h6>
+        </p>
         <p class="mb-2">Ditt smarta, moderna system för lagerkontroll.</p>
         <p class="small">Byggd med ASP.NET Core & Angular 20.</p>
       </div>
 
       <div class="col-md-3">
-        <h6 class="fw-bold mb-3">KONTAKT</h6>
+        <p class="h6 fw-bold mb-3">KONTAKT</p>
         <div class="mb-2">
           <i class="bi bi-envelope me-2"></i>
           <span class="small">support@lagerugglan.se</span>
