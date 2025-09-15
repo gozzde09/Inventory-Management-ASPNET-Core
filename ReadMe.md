@@ -56,6 +56,8 @@ This project follows modern SEO best practices, accessibility standards, and des
 2. **Local Database**: SQLite database stored locally, not suitable for multi-user production environments
 3. **General inventory context**: Designed for managing stock of any type of items
 4. **Local execution**: The application runs locally on the developer's machine
+5. **No Date Storage**: Dates are not saved in the database.
+6. **Table Sorting**: Sorting is not implemented in the table.
  
 
 ### 📋 Prerequisites
