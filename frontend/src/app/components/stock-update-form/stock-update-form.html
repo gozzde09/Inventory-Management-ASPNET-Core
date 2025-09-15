@@ -16,9 +16,9 @@
     </div>
 
     <div class="form-group mb-3">
-      <label for="currentQuantity" class="form-label"><strong>Nuvarande antal: </strong></label>
-      <span class="current-quantity"
-        >{{ inventoryForm.get('currentQuantity')?.value }} {{ item.unit }}</span
+      <label for="currentQuantity" class="form-label"><strong>Nuvarande antal:</strong></label>
+      <span class="current-quantity">
+        {{ inventoryForm.get('currentQuantity')?.value }} {{ item.unit }}</span
       >
     </div>
 
@@ -33,7 +33,7 @@
             value="add"
             id="addRadio"
           />
-          <label class="form-check-label" for="addRadio"> Lägg till (påfyllning) </label>
+          <label class="form-check-label" for="addRadio">Lägg till (påfyllning) </label>
         </div>
         <div class="form-check">
           <input
@@ -80,23 +80,35 @@
     @if(inventoryForm.valid && !inventoryForm.errors?.['stockNegative']) { @switch
     (getStockStatus(newBalance, item)) { @case ('danger') {
     <ngb-alert type="danger" [dismissible]="false">
-      <strong>Kritiskt nytt saldo: </strong> {{ newBalance }} {{ item.unit }} (efter
-      {{ inventoryForm.get('changeType')?.value === 'add' ? '+' : '-' }}
-      {{ inventoryForm.get('quantityChange')?.value }})
+      <i class="bi bi-exclamation-triangle me-2"></i>
+      <strong>Varning - Kritiskt lågt saldo!</strong><br />
+      Nytt saldo blir: <strong>{{ newBalance }} {{ item.unit }}</strong>
+      <small class="d-block mt-1">
+        {{ inventoryForm.get('changeType')?.value === 'add' ? 'Tillkommer' : 'Tas ut' }}:
+        {{ inventoryForm.get('quantityChange')?.value }} {{ item.unit }}
+      </small>
     </ngb-alert>
 
     } @case ('warning') {
     <ngb-alert type="warning" [dismissible]="false">
-      <strong>Lågt nytt saldo: </strong>{{ newBalance }} {{ item.unit }} (efter
-      {{ inventoryForm.get('changeType')?.value === 'add' ? '+' : '-' }}
-      {{ inventoryForm.get('quantityChange')?.value }})
+      <i class="bi bi-exclamation-circle me-2"></i>
+      <strong>Observera - Lågt saldo</strong><br />
+      Nytt saldo blir: <strong>{{ newBalance }} {{ item.unit }}</strong>
+      <small class="d-block mt-1">
+        {{ inventoryForm.get('changeType')?.value === 'add' ? 'Tillkommer' : 'Tas ut' }}:
+        {{ inventoryForm.get('quantityChange')?.value }} {{ item.unit }}
+      </small>
     </ngb-alert>
 
     } @default {
     <ngb-alert type="success" [dismissible]="false">
-      <strong>Nytt saldo: </strong>{{ newBalance }} {{ item.unit }} (efter
-      {{ inventoryForm.get('changeType')?.value === 'add' ? '+' : '-' }}
-      {{ inventoryForm.get('quantityChange')?.value }})
+      <i class="bi bi-check-circle me-2"></i>
+      <strong>Förhandsgranskning</strong><br />
+      Nytt saldo blir: <strong>{{ newBalance }} {{ item.unit }}</strong>
+      <small class="d-block mt-1">
+        {{ inventoryForm.get('changeType')?.value === 'add' ? 'Tillkommer' : 'Tas ut' }}:
+        {{ inventoryForm.get('quantityChange')?.value }} {{ item.unit }}
+      </small>
     </ngb-alert>
     } } }
   </form>

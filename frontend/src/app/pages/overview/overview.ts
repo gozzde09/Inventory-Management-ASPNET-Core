@@ -1,8 +1,8 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { InventoryService } from '../../../services/inventory.service';
-import { Item } from '../../../interfaces/item-model';
+import { InventoryService } from '../../services/inventory.service';
+import { Item } from '../../interfaces/item-model';
 
 @Component({
   selector: 'app-overview',
@@ -26,8 +26,8 @@ export class Overview implements OnInit {
     this.inventoryService.getItems().subscribe((data: Item[]) => {
       this.items.set(data);
       this.totalItems.set(data.length);
-      this.lowStock.set(data.filter((item) => item.status === 'Yellow').length);
-      this.criticalStock.set(data.filter((item) => item.status === 'Red').length);
+      this.lowStock.set(data.filter((item) => item.statusColor === 'yellow').length);
+      this.criticalStock.set(data.filter((item) => item.statusColor === 'red').length);
     });
   }
 

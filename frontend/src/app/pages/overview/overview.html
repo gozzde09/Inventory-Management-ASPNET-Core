@@ -1,0 +1,74 @@
+<h3 class="text-center text-nowrap mt-2">Lagerstatus - Översikt</h3>
+<div class="container my-4">
+  <div class="row">
+    <div class="col-md-4 mb-3">
+      <div class="card text-center">
+        <div class="card-body">
+          <div class="mb-2"></div>
+          <h5 class="card-title text-success">
+            <i class="bi bi-circle-fill me-2"></i>{{ totalItems() }} Artiklar
+          </h5>
+          <i class="card-text">Totalt antal artiklar i systemet.</i>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4 mb-3">
+      <div class="card text-center">
+        <div class="card-body">
+          <div class="mb-2"></div>
+          <h5 class="card-title text-warning">
+            <i class="bi bi-circle-fill me-2"></i>{{ lowStock() }} Lågt saldo
+          </h5>
+          <i class="card-text">Artiklar som behöver påfyllning.</i>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4 mb-3">
+      <div class="card text-center">
+        <div class="card-body">
+          <div class="mb-2"></div>
+          <h5 class="card-title text-danger">
+            <i class="bi bi-circle-fill me-2"></i>{{ criticalStock() }} Kritiskt lågt
+          </h5>
+          <i class="card-text">Artiklar med akut behov av påfyllning.</i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="text-center my-4">
+    <button class="btn btn-blue" (click)="navigateToItems()">Gå till lagerhantering</button>
+  </div>
+
+  <div>
+    <h4>Senaste aktivitet</h4>
+    <div class="list-group">
+      @for(item of getRecentItems(); track item.id) {
+      <div
+        class="list-group-item"
+        [ngClass]="{
+          'bg-yellow': item.statusColor === 'yellow',
+          'bg-red': item.statusColor === 'red'
+        }"
+      >
+        <div class="d-flex w-100 justify-content-between">
+          <h5 class="mb-1">{{ item.name }}</h5>
+          <small>{{ item.quantity }} st kvar</small>
+        </div>
+        <p class="mb-1">
+          {{
+            getStatusText(item.statusColor) === 'green'
+              ? 'Uppdaterat saldo'
+              : getStatusText(item.statusColor) === 'yellow'
+              ? 'Lågt saldo varning'
+              : 'Kritiskt saldo varning'
+          }}
+        </p>
+      </div>
+      }
+    </div>
+    <i class="my-2">Lista över senaste aktiviteter i systemet</i>
+  </div>
+</div>
