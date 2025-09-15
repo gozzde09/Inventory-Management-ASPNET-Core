@@ -58,6 +58,10 @@ namespace InventoryManagement.Services
         throw new InvalidOperationException($"An item with name '{item.Name}' already exists.");
       }
 
+      itemFromDb.Name = item.Name;
+      itemFromDb.Unit = item.Unit;
+      itemFromDb.CriticalStockThreshold = item.CriticalStockThreshold;
+
       await _context.SaveChangesAsync();
 
       return itemFromDb;

@@ -1,9 +1,6 @@
 <!-- Modal -->
 <div class="modal-header">
-  <h4 class="modal-title">
-    <i class="bi bi-exclamation-triangle text-danger me-2"></i>
-    Bekräfta borttagning
-  </h4>
+  <h4 class="modal-title">Bekräfta borttagning</h4>
   <button type="button" class="btn-close" aria-label="Close" (click)="onCancel()"></button>
 </div>
 
@@ -11,10 +8,10 @@
   <p class="confirmation-message">
     Är du säker på att du vill ta bort <strong>"{{ item.name }}"</strong>?
   </p>
-  <div class="warning-text text-muted mt-2">
-    <i class="bi bi-info-circle text-warning align-middle me-1"></i>
+  <ngb-alert type="warning" [dismissible]="false">
+    <i class="bi bi-exclamation-triangle me-1"></i>
     <small>Denna åtgärd kan inte ångras.</small>
-  </div>
+  </ngb-alert>
 </div>
 
 <div class="modal-footer">

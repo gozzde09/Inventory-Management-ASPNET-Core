@@ -1,12 +1,12 @@
 import { Component, Input } from '@angular/core';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
 import { Item } from '../../interfaces/item-model';
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-confirmation-delete-modal',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, NgbAlertModule],
   templateUrl: './confirmation-delete-modal.html',
 })
 export class ConfirmationDeleteModal {
