@@ -1,32 +1,35 @@
-# Inventory Management System
+# ﻿Lagerhantering för sjukvårdsmaterial
 
-*[Svenska version finns nedan](#svenska) / [Swedish version available below](#svenska)*
+# Beskrivning
 
-## English
+Denna webbapplikation är byggd för att hjälpa en låtsas vårdcentral att hålla koll på lagerstatus för sjukvårdsmaterial.
 
-### 🏥 Healthcare Inventory Management System
+# Applikationen består av:
 
-A fullstack CRUD application built with ASP.NET Core 9 API and SQLite database, featuring an Angular 20 frontend. 
-This web application is designed to manage inventory status for different supplies.
+1- Backend: ASP.NET Core 9 Web API (CRUD för artiklar och endpoint för saldoändring).
 
-### 🚀 Features
+2- Frontend: Angular 20 (lista artiklar, uppdatera antal och visa varningsindikatorer).
 
-- **Item Management**: List all registered items with name, quantity in stock, and unit
-- **Create New Items**: Add new items with name, initial quantity, threshold and unit
-- **Edit Items**: Edit items with name, threshold and unit
-- **Delete Items**: Remove items from inventory
-- **Update Stock Balance**: Increase or decrease inventory balance (balance cannot go negative)
-- **Low Stock Warning**: Color-coded warnings when an item's balance is below a defined threshold
+3- Databas: SQLite, kommunikation via JSON.
 
-### 🛠️ Technology Stack
+# Funktionalitet
 
-**Backend:**
-- ASP.NET Core 9 Web API
-- Entity Framework Core
-- SQLite Database
+1- Lista artiklar
+Visa alla registrerade artiklar med namn, antal i lager och enhet.
+
+2- Skapa artikel
+Lägga till ny artikel med namn, initialt antal och enhet.
+
+3- Uppdatera saldo
+Öka eller minska lagersaldo. Saldo kan inte bli negativt.
+
+4- Låg lager varning
+Om en artikels saldo är under en definierad gräns visas en färgkodad varning.
+
 - RESTful API with JSON communication
 
 **Frontend:**
+
 - Angular 20
 - TypeScript
 - HTML/CSS
@@ -55,12 +58,14 @@ Before running this application, make sure you have the following installed:
 ### 🔧 Installation Instructions
 
 #### 1. Clone the Repository
+
 ```bash
 git clone https://github.com/gozzde09/Inventory-Management-LagerUgglan.git
 cd Inventory-Management-LagerUgglan
 ```
 
 #### 2. Backend Setup (ASP.NET Core API)
+
 ```bash
 # Navigate to the backend project directory
 cd backend
@@ -74,12 +79,14 @@ dotnet ef database update
 # Run the API
 dotnet run
 ```
+
 The API will be available at `https://localhost:5293` wtih Swagger-view
 
 #### 3. Frontend Setup (Angular)
+
 ```bash
 # Navigate to the Angular project directory
-cd frontend 
+cd frontend
 
 # Install npm packages
 npm install
@@ -87,6 +94,7 @@ npm install
 # Run the Angular application
 ng serve
 ```
+
 The Angular application will be available at `http://localhost:4200`
 
 ### Usage
@@ -101,11 +109,13 @@ The Angular application will be available at `http://localhost:4200`
 This application uses SQLite as the database. The database file will be automatically created in the project directory when you first run the application.
 
 **Database Schema Assumptions:**
+
 - Items table with columns: Id, Name, Quantity, Unit, riticalStockThreshold, Status
 - Automatic database creation on first run
 - Primary key auto-increment for item IDs
 
 ### 📁 Project Structure
+
 ```
 Inventory-Management-ASPNET-Core/
 ├── backend/              # ASP.NET Core Web API
@@ -113,14 +123,14 @@ Inventory-Management-ASPNET-Core/
 │   ├── Models/               # Data Models
 │   ├── Services/             # Services
 │   └── Program.cs            # API Entry Point
-├── frontend/                # Angular Frontend
+├── frontend/             # Angular Frontend
 │   ├── src/
 │   │   ├── app/             # Angular app
 │   │   ├── components/      # Four components
 │   │   ├── pages/           # Two pages
 │   │   └── services/        # Service
 │   └── package.json         # NPM Dependencies
-└── README.md                
+└── README.md
 ```
 
 ### 🔍 API Endpoints
@@ -135,7 +145,7 @@ Inventory-Management-ASPNET-Core/
 
 ### 🏥 Lagersystem för Vårdcentral
 
-En fullstack CRUD-applikation byggd med ASP.NET Core 9 API och SQLite-databas, med en Angular 20 frontend. 
+En fullstack CRUD-applikation byggd med ASP.NET Core 9 API och SQLite-databas, med en Angular 20 frontend.
 Denna webbapplikation är designad för att hjälpa vårdcentraler att hantera lagerstatus för medicinska artiklar.
 
 ### 🚀 Funktioner
@@ -150,12 +160,14 @@ Denna webbapplikation är designad för att hjälpa vårdcentraler att hantera l
 ### 🛠️ Teknikstack
 
 **Backend:**
+
 - ASP.NET Core 9 Web API
 - Entity Framework Core
 - SQLite-databas
 - RESTful API med JSON-kommunikation
 
 **Frontend:**
+
 - Angular 20
 - TypeScript
 - HTML/CSS
@@ -167,6 +179,7 @@ Denna webbapplikation är designad för att hjälpa vårdcentraler att hantera l
 Denna applikation använder SQLite som databas. Databasfilen kommer automatiskt att skapas i projektmappen när du första gången kör applikationen.
 
 **Antaganden om databasschema:**
+
 - Items-tabell med kolumner: Id, Name, Quantity, Unit, CriticalStockThreshold, Status
 - Automatisk databasskapande vid första körningen
 - Primärnyckel auto-increment för artikel-ID:n
@@ -179,5 +192,3 @@ Denna applikation använder SQLite som databas. Databasfilen kommer automatiskt 
 4. **Allmänt lagerhanteringssystem**: Designad för att hantera lager av alla typer av artiklar, inte begränsad till medicinska förråd
 5. **Lokal körning**: Applikationen körs lokalt på utvecklarens maskin
 6. **Unika artikelnamn**: Varje artikel i lagret måste ha ett unikt namn
-
-

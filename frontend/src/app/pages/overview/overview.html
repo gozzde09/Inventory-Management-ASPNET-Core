@@ -54,18 +54,18 @@
         }"
       >
         <div class="d-flex w-100 justify-content-between">
-          <h5 class="mb-1">{{ item.name }}</h5>
+          <h6 class="mb-1">{{ item.name }}</h6>
           <small>{{ item.quantity }} st kvar</small>
         </div>
-        <p class="mb-1">
+        <i class="mb-1 text-small">
           {{
             getStatusText(item.statusColor) === 'green'
-              ? 'Uppdaterat saldo'
+              ? ''
               : getStatusText(item.statusColor) === 'yellow'
               ? 'Lågt saldo varning'
               : 'Kritiskt saldo varning'
           }}
-        </p>
+        </i>
       </div>
       }
     </div>
