@@ -5,7 +5,7 @@ namespace InventoryManagement.Models
 {
   public enum StockStatus
   {
-    Green, Yellow, Red
+    green, yellow, red
   }
 
   public class Item
@@ -23,9 +23,10 @@ namespace InventoryManagement.Models
     [Range(0, int.MaxValue, ErrorMessage = "Critical stock threshold cannot be negative")]
     public int CriticalStockThreshold { get; set; }
 
-    public StockStatus Status =>
-        Quantity <= CriticalStockThreshold ? StockStatus.Red :
-        Quantity <= LowStockThreshold ? StockStatus.Yellow :
-        StockStatus.Green;
+    public StockStatus StatusColor =>
+        Quantity <= CriticalStockThreshold ? StockStatus.red :
+        Quantity <= LowStockThreshold ? StockStatus.yellow :
+        StockStatus.green;
   }
+
 }

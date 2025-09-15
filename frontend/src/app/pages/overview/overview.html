@@ -41,7 +41,7 @@
 
   <div>
     <h4>Senaste aktivitet</h4>
-    <div class="list-group">
+    <div class="list-group border">
       @for(item of getRecentItems(); track item.id) {
       <div
         class="list-group-item"
@@ -56,9 +56,9 @@
         </div>
         <i class="mb-1 text-small">
           {{
-            getStatusText(item.statusColor) === 'green'
+            item.statusColor === 'green'
               ? ''
-              : getStatusText(item.statusColor) === 'yellow'
+              : item.statusColor === 'yellow'
               ? 'Lågt saldo varning'
               : 'Kritiskt saldo varning'
           }}

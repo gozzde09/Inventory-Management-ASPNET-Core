@@ -26,7 +26,6 @@ export class Items implements OnInit {
     unit: '',
     lowStockThreshold: 10,
     criticalStockThreshold: 5,
-    status: 'Green',
     statusColor: 'green',
   };
 
