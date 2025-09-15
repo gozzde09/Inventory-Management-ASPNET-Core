@@ -12,6 +12,7 @@ namespace InventoryManagement.Services
       _context = context;
     }
 
+    // CREATE
     public async Task<Item> CreateItemAsync(Item item)
     {
       // Validation: Check for duplicate names
@@ -56,11 +57,6 @@ namespace InventoryManagement.Services
       {
         throw new InvalidOperationException($"An item with name '{item.Name}' already exists.");
       }
-
-      // Update allowed fields
-      itemFromDb.Name = item.Name;
-      itemFromDb.Unit = item.Unit;
-      itemFromDb.CriticalStockThreshold = item.CriticalStockThreshold;
 
       await _context.SaveChangesAsync();
 
