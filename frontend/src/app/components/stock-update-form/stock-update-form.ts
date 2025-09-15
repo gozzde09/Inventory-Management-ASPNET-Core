@@ -4,6 +4,7 @@ import { Item } from '../../interfaces/item-model';
 import { InventoryService } from '../../services/inventory.service';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { InventoryValidators } from '../../inventory.validators';
 
 @Injectable({
   providedIn: 'root',
@@ -55,12 +56,22 @@ export class StockUpdateModalContent implements OnInit {
       article: [{ value: this.item.name, disabled: true }],
       currentQuantity: [{ value: this.item.quantity, disabled: true }],
       changeType: ['add', Validators.required],
-      quantityChange: [1, [Validators.required, Validators.min(1)]],
+      quantityChange: [
+        1,
+        [
+          Validators.required,
+          Validators.min(1),
+          InventoryValidators.nonNegative(),
+          InventoryValidators.notZero(),
+          InventoryValidators.digitsOnly(),
+        ],
+      ],
     });
 
-    // Subscribe to form changes to update new balance
+    // Subscribe to form changes to update new balance and set stockNegative error
     this.inventoryForm.valueChanges.subscribe(() => {
       this.updateNewBalance();
+      this.checkStockNegative();
     });
   }
 
@@ -74,6 +85,16 @@ export class StockUpdateModalContent implements OnInit {
     } else {
       this.newBalance = currentQuantity - quantityChange;
     }
+  }
+
+  private checkStockNegative(): void {
+    const errors = { ...this.inventoryForm.errors };
+    if (this.newBalance < 0) {
+      errors['stockNegative'] = true;
+    } else {
+      delete errors['stockNegative'];
+    }
+    this.inventoryForm.setErrors(Object.keys(errors).length ? errors : null);
   }
 
   incrementQuantity(): void {

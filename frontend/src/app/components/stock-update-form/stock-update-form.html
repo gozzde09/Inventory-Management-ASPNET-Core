@@ -59,38 +59,39 @@
           id="quantityChange"
           formControlName="quantityChange"
           class="form-control text-center"
-          pattern="^[0-9]+$"
+          min="1"
         />
         <button type="button" class="btn btn-outline-secondary" (click)="incrementQuantity()">
           +
         </button>
       </div>
-      @if (!inventoryForm.get('quantityChange')?.value) {
+      @if (inventoryForm.get('quantityChange')?.errors?.['required']) {
       <div class="text-danger small mt-1">Antal är obligatoriskt.</div>
-      } @else if(inventoryForm.get('quantityChange')?.value==0) {
-      <div class="text-danger small mt-1">Antal får inte vara null.</div>
-      } @else if(inventoryForm.get('quantityChange')?.value<0) {
+      } @else if (inventoryForm.get('quantityChange')?.errors?.['notZero']) {
+      <div class="text-danger small mt-1">Antal får inte vara 0.</div>
+      } @else if (inventoryForm.get('quantityChange')?.errors?.['nonNegative']) {
       <div class="text-danger small mt-1">Antal får inte vara negativt.</div>
-      } @else if (inventoryForm.get('quantityChange')?.value &&
-      !inventoryForm.get('quantityChange')?.value.toString().match('^[0-9]+$')) {
+      } @else if (inventoryForm.get('quantityChange')?.errors?.['digitsOnly']) {
       <div class="text-danger small mt-1">Antal får bara innehålla siffror.</div>
-      } @else if (newBalance<0) {
+      } @if (inventoryForm.errors?.['stockNegative']) {
       <div class="text-danger small mt-1">Lagret kan inte bli negativt.</div>
       }
     </div>
-    @if(inventoryForm.valid && newBalance >= 0) { @switch (getStockStatus(newBalance, item)) { @case
-    ('danger') {
+    @if(inventoryForm.valid && !inventoryForm.errors?.['stockNegative']) { @switch
+    (getStockStatus(newBalance, item)) { @case ('danger') {
     <ngb-alert type="danger" [dismissible]="false">
       <strong>Kritiskt nytt saldo: </strong> {{ newBalance }} {{ item.unit }} (efter
       {{ inventoryForm.get('changeType')?.value === 'add' ? '+' : '-' }}
       {{ inventoryForm.get('quantityChange')?.value }})
     </ngb-alert>
+
     } @case ('warning') {
     <ngb-alert type="warning" [dismissible]="false">
       <strong>Lågt nytt saldo: </strong>{{ newBalance }} {{ item.unit }} (efter
       {{ inventoryForm.get('changeType')?.value === 'add' ? '+' : '-' }}
       {{ inventoryForm.get('quantityChange')?.value }})
     </ngb-alert>
+
     } @default {
     <ngb-alert type="success" [dismissible]="false">
       <strong>Nytt saldo: </strong>{{ newBalance }} {{ item.unit }} (efter
@@ -100,6 +101,7 @@
     } } }
   </form>
 </div>
+
 <div class="modal-footer">
   <button type="button" class="btn btn-secondary" (click)="activeModal.dismiss()">Avbryt</button>
   <button
