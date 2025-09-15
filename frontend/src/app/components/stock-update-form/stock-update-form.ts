@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { NgbAlertModule, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Injectable, Component, Input, OnInit } from '@angular/core';
+import { NgbAlertModule, NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Item } from '../../interfaces/item-model';
 import { InventoryService } from '../../services/inventory.service';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
@@ -27,11 +27,6 @@ export class StockUpdateForm {
     );
   }
 }
-
-// Modal Content Component
-import { Component, Input, OnInit } from '@angular/core';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-
 @Component({
   selector: 'app-stock-update-modal-content',
   standalone: true,
@@ -70,9 +65,9 @@ export class StockUpdateModalContent implements OnInit {
   }
 
   private updateNewBalance(): void {
-    const currentQuantity = this.item.quantity;
+    const currentQuantity = Number(this.item.quantity);
     const changeType = this.inventoryForm.get('changeType')?.value;
-    const quantityChange = this.inventoryForm.get('quantityChange')?.value || 0;
+    const quantityChange = Number(this.inventoryForm.get('quantityChange')?.value) || 0;
 
     if (changeType === 'add') {
       this.newBalance = currentQuantity + quantityChange;
@@ -82,7 +77,7 @@ export class StockUpdateModalContent implements OnInit {
   }
 
   incrementQuantity(): void {
-    const currentValue = this.inventoryForm.get('quantityChange')?.value || 0;
+    const currentValue = Number(this.inventoryForm.get('quantityChange')?.value) || 0;
     this.inventoryForm.get('quantityChange')?.setValue(currentValue + 1);
   }
 
@@ -96,16 +91,10 @@ export class StockUpdateModalContent implements OnInit {
   onSubmit(): void {
     if (this.inventoryForm.valid) {
       const changeType = this.inventoryForm.get('changeType')?.value;
-      const quantityChange = this.inventoryForm.get('quantityChange')?.value;
+      const quantityChange = Number(this.inventoryForm.get('quantityChange')?.value);
 
       // Calculate the adjustment amount (positive for add, negative for remove)
       const adjustment = changeType === 'add' ? quantityChange : -quantityChange;
-
-      // Prevent negative stock
-      if (this.newBalance < 0) {
-        alert('Lagret kan inte bli negativt');
-        return;
-      }
 
       this.inventoryService.adjustBalance(this.item.id, adjustment).subscribe({
         next: (updatedItem: Item) => {
@@ -116,5 +105,14 @@ export class StockUpdateModalContent implements OnInit {
         },
       });
     }
+  }
+  getStockStatus(balance: number, item: any): 'danger' | 'warning' | 'success' {
+    if (balance <= item.criticalStockThreshold) {
+      return 'danger';
+    }
+    if (balance <= item.lowStockThreshold) {
+      return 'warning';
+    }
+    return 'success';
   }
 }

@@ -4,11 +4,16 @@ app-root {
   display: flex;
   flex-direction: column;
   font-family: Verdana, 'Helvetica Neue', sans-serif;
+  font-size: 14px;
   margin: 0;
   min-height: 100vh;
 }
 main {
   flex-grow: 1;
+}
+header,
+footer {
+  background-color: #37474f;
 }
 .btn-blue {
   background-color: #005b89;
@@ -18,14 +23,20 @@ main {
   background-color: #004a6c;
   color: #fff;
 }
+.btn-blue:disabled {
+  background-color: #37474f;
+  color: #fff;
+}
 .text-blue {
   color: #005b89;
 }
-.btn-outline-secondary {
+.btn-outline-secondary,
+.btn-secondary {
   border-color: #37474f;
   color: #37474f;
 }
-.btn-outline-secondary:hover {
+.btn-outline-secondary:hover,
+.btn-secondary {
   background-color: #37474f;
   color: #fff;
 }
@@ -36,4 +47,11 @@ main {
 .tooltip-inner {
   background-color: #37474f;
   color: #fff;
+}
+@media (max-width: 440px) {
+  body,
+  app-root,
+  .btn-blue {
+    font-size: 11px;
+  }
 }

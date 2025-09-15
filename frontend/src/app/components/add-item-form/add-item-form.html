@@ -79,8 +79,13 @@
     />
     @if (!newItem.criticalStockThreshold) {
     <div class="text-danger small mt-1">Minsta lagernivå är obligatoriskt.</div>
-    }@else if( newItem.criticalStockThreshold==0) {
-    <div class="text-danger small mt-1">Antal får inte vara null.</div>
+    } @else if( newItem.criticalStockThreshold==0) {
+    <div class="text-danger small mt-1">Minsta lagernivå får inte vara null.</div>
+    } @else if( newItem.criticalStockThreshold<0) {
+    <div class="text-danger small mt-1">Minsta lagernivå får inte vara negativt.</div>
+    } @else if (newItem.criticalStockThreshold &&
+    !newItem.criticalStockThreshold.toString().match('^[0-9]+$')) {
+    <div class="text-danger small mt-1">Minsta lagernivå får bara innehålla siffror.</div>
     }
   </div>
 
