@@ -1,6 +1,6 @@
 import { Injectable, Component, Input, OnInit } from '@angular/core';
 import { NgbAlertModule, NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { Item } from '../../interfaces/item-model';
+import { Item } from '../../item-interface';
 import { InventoryService } from '../../services/inventory.service';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';

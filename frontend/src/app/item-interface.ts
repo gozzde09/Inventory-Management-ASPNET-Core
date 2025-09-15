@@ -5,8 +5,7 @@ export interface Item {
   unit: string;
   lowStockThreshold: number;
   criticalStockThreshold: number;
-  status: 'Green' | 'Yellow' | 'Red';
-  statusColor: string;
+  statusColor: 'green' | 'yellow' | 'red';
 }
 
 export interface CreateItemRequest {

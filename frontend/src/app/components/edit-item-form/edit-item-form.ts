@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { Item } from '../../interfaces/item-model';
+import { Item } from '../../item-interface';
 
 @Component({
   selector: 'app-edit-item-form',

@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { NgbActiveModal, NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
-import { Item } from '../../interfaces/item-model';
+import { Item } from '../../item-interface';
 import { CommonModule } from '@angular/common';
 
 @Component({

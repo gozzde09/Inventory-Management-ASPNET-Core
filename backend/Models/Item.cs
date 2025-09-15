@@ -27,7 +27,5 @@ namespace InventoryManagement.Models
         Quantity <= CriticalStockThreshold ? StockStatus.Red :
         Quantity <= LowStockThreshold ? StockStatus.Yellow :
         StockStatus.Green;
-
-    public string StatusColor => Status.ToString().ToLower();
   }
 }

@@ -1,7 +1,7 @@
 import { AddItemForm } from '../../components/add-item-form/add-item-form';
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, signal } from '@angular/core';
-import { CreateItemRequest, Item } from '../../interfaces/item-model';
+import { CreateItemRequest, Item } from '../../item-interface';
 import { FormsModule } from '@angular/forms';
 import { InventoryService } from '../../services/inventory.service';
 import { StockUpdateForm } from '../../components/stock-update-form/stock-update-form';

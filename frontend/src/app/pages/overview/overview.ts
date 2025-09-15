@@ -2,7 +2,7 @@ import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { InventoryService } from '../../services/inventory.service';
-import { Item } from '../../interfaces/item-model';
+import { Item } from '../../item-interface';
 
 @Component({
   selector: 'app-overview',
