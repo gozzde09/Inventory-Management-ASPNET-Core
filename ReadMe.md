@@ -13,6 +13,7 @@ https://github.com/user-attachments/assets/7aff56f1-3a08-47d1-90ab-63e6f2b1906a
 - **Delete Items**: Remove items from inventory
 - **Update Stock Balance**: Increase or decrease inventory balance (balance cannot go negative)
 - **Low Stock Warning**: Color-coded warnings when an item's balance is below a defined threshold
+- **Detailed Validation**: Input validation (required fields,unique item name, quantities cannot be negative, zero or letters etc..)
 
 ### 🛠️ Technology Stack
 
@@ -43,17 +44,17 @@ https://github.com/user-attachments/assets/7aff56f1-3a08-47d1-90ab-63e6f2b1906a
 
 1. **Single User System**: No authentication or user management implemented
 2. **Local Database**: SQLite database stored locally, not suitable for multi-user production environments
-3. **Basic Validation**: Input validation (required fields, quantities cannot be negative, zero or letters etc..)
-4. **Swedish UI**: Interface supports basic localization
-5. **General inventory context**: Designed for managing stock of any type of items
-6. **Local execution**: The application runs locally on the developer's machine
-7. **Unique item names**: Each inventory item must have a unique name
+3. **General inventory context**: Designed for managing stock of any type of items
+4. **Local execution**: The application runs locally on the developer's machine
+ 
 
 ### 📋 Prerequisites
 
 Before running this application, make sure you have the following installed:
 
 - [.NET 9 SDK](https://dotnet.microsoft.com/download/dotnet/9.0)
+- [Entity Framework Core Tools](https://learn.microsoft.com/ef/core/cli/dotnet)  
+  Install with: `dotnet tool install --global dotnet-ef`
 - [Node.js](https://nodejs.org/) (version 18 or higher)
 - [Angular CLI](https://angular.io/cli) (`npm install -g @angular/cli`)
 - [Visual Studio](https://visualstudio.microsoft.com/) or [Visual Studio Code](https://code.visualstudio.com/)
@@ -83,7 +84,7 @@ dotnet ef database update
 dotnet run
 ```
 
-The API will be available at `https://localhost:5293` wtih Swagger-view
+The API will be available at `https://localhost:5293` with Swagger-UI
 
 #### 3. Frontend Setup (Angular)
 
@@ -105,6 +106,7 @@ The Angular application will be available at `http://localhost:4200`
 - Navigate to the Items page to view all registered items
 - Use the "Add Item" form to register new items
 - Update stock levels using the stock update form
+- Update or remove item by the corresponding icons
 - Monitor stock status colors: Green (sufficient), Yellow (low), Red (critical)
 
 ### 🗄️ Database Configuration
@@ -113,7 +115,7 @@ This application uses SQLite as the database. The database file will be automati
 
 **Database Schema Assumptions:**
 
-- Items table with columns: Id, Name, Quantity, Unit, riticalStockThreshold, Status
+- Items table with columns: Id, Name, Quantity, Unit, CriticalStockThreshold
 - Automatic database creation on first run
 - Primary key auto-increment for item IDs
 
@@ -121,18 +123,18 @@ This application uses SQLite as the database. The database file will be automati
 
 ```
 Inventory-Management-ASPNET-Core/
-├── backend/              # ASP.NET Core Web API
-│   ├── Controllers/          # API Controllers
-│   ├── Models/               # Data Models
-│   ├── Services/             # Services
-│   └── Program.cs            # API Entry Point
+├── backend/               # ASP.NET Core Web API
+│   ├── Controllers/            # API Controllers
+│   ├── Models/                  # Data Models
+│   ├── Services/                # Services
+│   └── Program.cs               # API Entry Point
 
-├── frontend/             # Angular Frontend
+├── frontend/              # Angular Frontend
 │   ├── src/
-│   │   ├── app/             # Angular app
-│   │   ├── components/      # Four components
-│   │   ├── pages/           # Two pages
-│   │   └── services/        # Service
-│   └── package.json         # NPM Dependencies
+│   │   ├── app/                 # Angular app
+│   │   |   ├── components/      # Four components
+│   │   |   ├── pages/           # Two pages
+│   │   |   └── services/        # Service
+│   └── package.json             # NPM Dependencies
 └── README.md
 ```
