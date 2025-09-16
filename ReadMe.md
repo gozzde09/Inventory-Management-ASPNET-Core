@@ -50,17 +50,17 @@ This project follows modern SEO best practices, accessibility standards, and des
 - `DELETE /api/items/{id}` - Delete an item
 - `PATCH /api/items/{id}/adjust-balance` - Update item quantity
 
-🔍 Assumptions (Varsayımlar)
+🔍 Assumptions
 
   - Single User System: No authentication or user management implemented
   - Local Database: SQLite database stored locally, not suitable for multi-user production environments
   - General inventory context: Designed for managing stock of any type of items
   - Local execution: The application runs locally on the developer's machine
 
-🚀 Things That Can Be Done (Yapılabilecek Şeyler)
+🚀 Things That Can Be Done Later
 
-   -  Date Storage for Operations: Save timestamps for "ta bort" (removal) and "fyllning" (restocking) operations
-   -  Table Sorting: Implement sorting functionality for table columns (ascending/descending)
+   - Date Storage for Operations: Save timestamps for "ta bort" (removal) and "fyllning" (restocking) operations
+   - Table Sorting: Implement sorting functionality for table columns (ascending/descending)
    - User Authentication: Add login/registration system for multi-user support
    - Cloud Database Integration: Migrate from SQLite to a cloud-based database solution
    - Advanced Search & Filtering: Add search functionality and advanced filtering options
