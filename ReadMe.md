@@ -8,12 +8,13 @@ https://github.com/user-attachments/assets/723578a8-05a4-4af4-b4c3-43aff1725cf5
 ### 🚀 Features
 
 - **Item Management**: List all registered items with name, quantity in stock, and unit
-- **Create New Items**: Add new items with name, initial quantity, threshold and unit
-- **Edit Items**: Edit items with name, threshold and unit
-- **Delete Items**: Remove items from inventory
-- **Update Stock Balance**: Increase or decrease inventory balance (balance cannot go negative)
+- **Create New Items**: Add new items with name, initial quantity, threshold and unit **(assumed as adminrole)**
+- **Edit Items**: Edit items with name, threshold and unit **(assumed as admin role and changes only fixed values)**
+- **Delete Items**: Remove items from inventory **(assumed as adminrole)**
+- **Update Stock Balance**: Increase or decrease inventory balance (balance cannot go negative) **user role**
 - **Low Stock Warning**: Color-coded warnings when an item's balance is below a defined threshold
 - **Detailed Validation**: Input validation (required fields,unique item name, quantities cannot be negative, zero or letters etc..)
+- **Responsiv design**
 
 ### 🛠️ Technology Stack
 
