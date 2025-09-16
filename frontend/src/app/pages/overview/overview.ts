@@ -35,19 +35,6 @@ export class Overview implements OnInit {
     this.router.navigate(['/items']);
   }
 
-  getStatusText(status: string): string {
-    switch (status) {
-      case 'Green':
-        return 'OK';
-      case 'Yellow':
-        return 'Low';
-      case 'Red':
-        return 'Kritiskt';
-      default:
-        return status;
-    }
-  }
-
   getRecentItems(): Item[] {
     return this.items()
       .slice()

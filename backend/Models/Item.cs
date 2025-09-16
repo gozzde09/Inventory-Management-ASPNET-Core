@@ -23,10 +23,11 @@ namespace InventoryManagement.Models
     [Range(0, int.MaxValue, ErrorMessage = "Critical stock threshold cannot be negative")]
     public int CriticalStockThreshold { get; set; }
 
-    public StockStatus StatusColor =>
+    public StockStatus Status =>
         Quantity <= CriticalStockThreshold ? StockStatus.red :
         Quantity <= LowStockThreshold ? StockStatus.yellow :
         StockStatus.green;
-  }
 
-}
+    public string StatusColor=> Status.ToString().ToLower();
+  }
+  }
