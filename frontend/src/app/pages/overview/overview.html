@@ -4,8 +4,8 @@
     <div class="col-md-4 mb-3">
       <div class="card text-center">
         <div class="card-body my-4">
-          <h4 class="h5 card-title text-success">
-            <i class="bi bi-circle-fill me-2"></i>{{ totalItems() }} Artiklar
+          <h4 class="h5 card-title" style="color: #005b89">
+            <i class="bi bi-circle-fill me-2"></i>{{ totalItems() }} artiklar
           </h4>
           <i class="card-text">Totalt antal artiklar i systemet.</i>
         </div>
@@ -16,7 +16,7 @@
       <div class="card text-center">
         <div class="card-body my-4">
           <h4 class="h5 card-title text-warning">
-            <i class="bi bi-circle-fill me-2"></i>{{ lowStock() }}Lågt saldo
+            <i class="bi bi-circle-fill me-2"></i>{{ lowStock() }} lågt saldo
           </h4>
           <i class="card-text">Artiklar som behöver påfyllning.</i>
         </div>
@@ -27,7 +27,7 @@
       <div class="card text-center">
         <div class="card-body my-4">
           <h4 class="h5 card-title text-danger">
-            <i class="bi bi-circle-fill me-2"></i>{{ criticalStock() }}Kritiskt lågt saldo
+            <i class="bi bi-circle-fill me-2"></i>{{ criticalStock() }} kritiskt lågt saldo
           </h4>
           <i class="card-text">Artiklar med akut behov av påfyllning.</i>
         </div>
