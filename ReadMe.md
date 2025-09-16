@@ -3,7 +3,7 @@
 A fullstack CRUD application built with ASP.NET Core 9 API and SQLite database, featuring an Angular 20 frontend.
 This web application is designed to manage inventory status for different supplies.
 
-https://github.com/user-attachments/assets/5f4ed3e6-f2d0-4c13-9a55-acb7ff711140
+https://github.com/user-attachments/assets/723578a8-05a4-4af4-b4c3-43aff1725cf5
 
 ### 🚀 Features
 
